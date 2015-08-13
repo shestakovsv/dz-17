@@ -1,19 +1,32 @@
 
 <?php
+
 error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 ini_set('display_errors', 1);
 header('Content-type: text/html; charset=utf-8');
 
 
+$project_root = $_SERVER['DOCUMENT_ROOT'];
+$smarty_dir = $project_root . '/smarty/';
+
+// put full path to Smarty.class.php
+require('smarty/libs/Smarty.class.php');
+$smarty = new Smarty();
+
+$smarty->compile_check = true;
+$smarty->debugging = FALSE;
+
+$smarty->template_dir = $smarty_dir . 'templates';
+$smarty->compile_dir = $smarty_dir . 'templates_c';
+$smarty->cache_dir = $smarty_dir . 'cache';
+$smarty->config_dir = $smarty_dir . 'configs';
 
 $Location = basename($_SERVER['PHP_SELF']);
-
 $filename = './Ann.txt';
-
 
 if (file_exists($filename)) {
     $temp_str = file_get_contents('./Ann.txt');
-    var_dump($temp_str);
+    //var_dump($temp_str);
     if (isset($temp_str)) {
         $Announcements = unserialize(file_get_contents('./Ann.txt')); // действие в случае удачи
     } else {
@@ -30,9 +43,9 @@ function Announcements_serialize($Announcements) {
         exit('Ошибка записи файла');
     }
 }
-
 //добавленых объявления в массив
 if (isset($_POST['main_form_submit'])) {
+    echo "111111111111111111111111111111111111111111111111111111111111";
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
         $Announcements[$id] = $_POST;
@@ -117,84 +130,36 @@ if ($id_key == null) {
     }
 }
 $checked = ($private_checked == 0) ? 'checked = ""' : "";
-?>
 
 
-<form  method="post">
 
-    <label><input type = "radio" checked = "" value = "1" name = "private">Частное лицо</label>
-    <label><input type = "radio" <?php echo $checked; ?>  value = "0" name = "private">Компания</label>
-    <br>
-    <label><b>Контактное лицо</b></label> <input type="text" maxlength="40" value="<?php echo $manager; ?>" name="manager">
-    <br> 
-    <label>Электронная почта</label><input type="text" value="<?php echo $email; ?>" name="email">
-    <br>
 
-    <?php
-    if ($allow_mails == 1) {
-        echo '<label  for="allow_mails"> <input type="checkbox" value="1" name="allow_mails" id="allow_mails" CHECKED class="form-input-checkbox">
-    <span class="form-text-checkbox">Я не хочу получать вопросы по объявлению по e-mail</span> </label> </div>';
-    } else {
-        echo '<label  for="allow_mails"> <input type="checkbox" value="1" name="allow_mails" id="allow_mails"  class="form-input-checkbox">
-    <span class="form-text-checkbox">Я не хочу получать вопросы по объявлению по e-mail</span> </label> </div>';
-    }
-    ?>
+$smarty->assign('seller_name', $seller_name);
+$smarty->assign('email', $email);
+$smarty->assign('phone', $phone);
+$smarty->assign('location_id', $location_id);
+$smarty->assign('category_id', $category_id);
+$smarty->assign('title', $title);
+$smarty->assign('description', $description);
+$smarty->assign('price', $price);
+$smarty->assign('manager', $manager);
+$smarty->assign('email', $email);
+$smarty->assign('phone', $phone);
+$smarty->assign('private_checked', $private_checked);
+$smarty->assign('allow_mails', $allow_mails);
+$smarty->assign('checked', $checked);
 
-    <br>
-    <label><b>Ваше имя </b></label><input type="text" maxlength="40"  value="<?php echo $seller_name; ?>" name="seller_name">
-    <br>  
 
-    <label>Номер телефона </label><input type="text" value="<?php echo $phone; ?>" name="phone">
-    <br>
-    <label>Город</label> 
-    <select title="Выберите Ваш город"  name="location_id">
-        <option >-- Города --</option>
-        <?php
-        foreach ($location as $value => $city) {
-            $selected = ($city == $location_id) ? 'selected=""' : '';
-            echo '<option data-coords=",," ' . $selected . ' value="' . $value . '">' . $city . '</option>';
-        }
-        ?>
-        <option id="select-region" value="0">Выбрать другой...</option> </select> 
-    <br>
-    <label>Категория</label> 
-    <select title="Выберите категорию объявления"  name="category_id" > 
-        <option >-- категории --</option>
-        <optgroup label="Транспорт">
-            <?php
-            foreach ($category as $value => $category_typ) {
-                $selected = ($category_typ == $category_id) ? 'selected=""' : '';
-                echo '<option data-coords=",," ' . $selected . ' value="' . $value . '">' . $category_typ . '</option>';
-            }
-            ?>
-        </optgroup></select>
-    <br>
-    <label>Название объявления</label> <input type="text" maxlength="50" value="<?php echo $title; ?>" name="title">
-    <br>
-    <label>Описание объявления</label><input type="text" maxlength="3000" value="<?php echo $description; ?>" name="description">
-    <br>
-    <label>Цена</label> <input type="text" maxlength="9" value="<?php echo $price; ?>" name="price"><span>руб.</span>
-    <br><br>
-    <input type="submit" value="Сохранить изменения"  name="main_form_submit" class="vas-submit-input" > 
-</form>
-
-<br><br>
-<?php
-//    if (isset($Announcements)) {empty($var)
 if (!empty($Announcements)) {
-    foreach ($Announcements as $id => $value) {
-        ?>
-        <a href="<?php echo $Location; ?>?id=<?php echo $id; ?>"><?php echo $Announcements[$id]['title']; ?></a>
-        <?php
-        echo '|  Цена:' . $Announcements[$id]['price'] . ' руб.  |';
-        echo $Announcements[$id]['seller_name'] . '  |';
-        ?>
-        <a href="<?php echo $Location; ?>?id_del=<?php echo $id; ?>">Удалить</a>        
-        <?php
-        echo "<br>";
-    }
+    $smarty->assign('Announcements', $Announcements);
 }
 
 
+$smarty->assign('Location', basename($_SERVER['PHP_SELF']));
+$smarty->assign('location', $location);
+$smarty->assign('category', $category);
+$smarty->assign('private', $private);
+$smarty->assign('name', 'Ned');
+$smarty->display('index.tpl');
 
-    
+
