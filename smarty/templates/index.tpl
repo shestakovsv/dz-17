@@ -28,7 +28,7 @@
 <br>
 <label>Город 
     <select title="Выберите Ваш город"  name="location_id">
-        <option >-- Города --</option>
+        <option >-- Выберите Ваш город --</option>
         {html_options options=$location selected=$location_id}
     </select>
 </label>
@@ -36,10 +36,16 @@
 
 <label>Категория
     <select title="Выберите категорию объявления"  name="category_id"> 
-        <option >-- Категории --</option>
-        {html_options options=$category selected=$category_id}    
+        <option >-- Выберите категорию объявления --</option>
+        <optgroup label="Транспорт">
+            {html_options options=$category selected=$category_id} 
+        </optgroup><optgroup label="Недвижимость">            
+            {html_options options=$category_realty selected=$category_id} 
+        </optgroup>
     </select>
 </label>
+
+
 <br>
 <label>Название объявления</label> <input type="text" maxlength="50" value="{$title|default:''}" name="title">
 <br>

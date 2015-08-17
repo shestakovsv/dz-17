@@ -81,8 +81,8 @@ if ($_GET == TRUE) {
         $id_del = $_GET['id_del'];
         unset($Announcements[$id_del]);
         Announcements_serialize($Announcements);
-        unset($id_del);
-        $id_key = "";
+        //unset($id_del);
+        //$id_key = "";
         header("Location: $Location");
         exit;
     }
@@ -100,7 +100,14 @@ $category["Новые автомобили"] = "Новые автомобили"
 $category['Мотоциклы и мототехника'] = "Мотоциклы и мототехника";
 $category['Грузовики и спецтехника'] = 'Грузовики и спецтехника';
 $category['Водный транспорт'] = "Водный транспорт";
-$category['Запчасти и аксессуары'] = "Запчасти и аксессуары";
+$category_realty['Квартиры'] = "Квартиры";
+$category_realty['Комнаты'] = "Комнаты";
+$category_realty['Дома, дачи, коттеджи'] = "Дома, дачи, коттеджи";
+$category_realty['Земельные участки'] = "Земельные участки";
+$category_realty['Гаражи и машиноместа'] = "Гаражи и машиноместа";
+$category_realty['Коммерческая недвижимость'] = "Коммерческая недвижимость";
+$category_realty['Недвижимость за рубежом'] = "Недвижимость за рубежом";
+
 
 $private['Частное лицо'] = "Частное лицо";
 $private['Компания'] = "Компания";
@@ -114,6 +121,7 @@ if (!empty($Announcements)) {
 $smarty->assign('Location', basename($_SERVER['PHP_SELF']));
 $smarty->assign('location', $location);
 $smarty->assign('category', $category);
+$smarty->assign('category_realty', $category_realty);
 $smarty->assign('private', $private);
 
 $smarty->display('index.tpl');
