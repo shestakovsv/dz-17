@@ -1,7 +1,7 @@
-<?php /* Smarty version 2.6.28, created on 2015-08-17 10:37:40
+<?php /* Smarty version 2.6.28, created on 2015-08-17 12:54:12
          compiled from index.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
-smarty_core_load_plugins(array('plugins' => array(array('modifier', 'default', 'index.tpl', 16, false),array('function', 'html_options', 'index.tpl', 32, false),)), $this); ?>
+smarty_core_load_plugins(array('plugins' => array(array('modifier', 'default', 'index.tpl', 16, false),array('function', 'html_options', 'index.tpl', 33, false),)), $this); ?>
 
 
 
@@ -39,6 +39,7 @@ unset($_smarty_tpl_vars);
 <label>Номер телефона </label><input type="text" value="<?php echo ((is_array($_tmp=@$this->_tpl_vars['phone'])) ? $this->_run_mod_handler('default', true, $_tmp, '') : smarty_modifier_default($_tmp, '')); ?>
 " name="phone">
 <br>
+
 <label>Город 
     <select title="Выберите Ваш город"  name="location_id">
         <option >-- Выберите Ваш город --</option>
@@ -51,16 +52,10 @@ unset($_smarty_tpl_vars);
 <label>Категория
     <select title="Выберите категорию объявления"  name="category_id"> 
         <option >-- Выберите категорию объявления --</option>
-        <optgroup label="Транспорт">
-            <?php echo smarty_function_html_options(array('options' => $this->_tpl_vars['category'],'selected' => $this->_tpl_vars['category_id']), $this);?>
- 
-        </optgroup><optgroup label="Недвижимость">            
-            <?php echo smarty_function_html_options(array('options' => $this->_tpl_vars['category_realty'],'selected' => $this->_tpl_vars['category_id']), $this);?>
- 
-        </optgroup>
+        <?php echo smarty_function_html_options(array('options' => $this->_tpl_vars['category'],'selected' => $this->_tpl_vars['category_id']), $this);?>
+
     </select>
 </label>
-
 
 <br>
 <label>Название объявления</label> <input type="text" maxlength="50" value="<?php echo ((is_array($_tmp=@$this->_tpl_vars['title'])) ? $this->_run_mod_handler('default', true, $_tmp, '') : smarty_modifier_default($_tmp, '')); ?>
