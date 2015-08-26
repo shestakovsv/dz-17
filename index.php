@@ -23,28 +23,30 @@ $smarty->config_dir = $smarty_dir . 'configs';
 
 
 //подключение к серверу SQL
-$bd = mysql_connect('localhost', "test1", "123") or die('Сервер недоступен'); //
+$bd = mysqli_connect('localhost', "test1", "123", "advertisements") or die('Сервер недоступен'); //
 echo 'подключение к серверу успешно <br>';
 
+
+
 //подключение к базе данных
-mysql_select_db('advertisements') or die('база данных недоступна');
-mysql_query('SET NAMES utf8');
+//mysql_select_db('advertisements') or die('база данных недоступна');
+mysqli_query($bd, 'SET NAMES utf8');
 echo 'подключение к базе данных advertisements успешно <br>';
 
 // выбор таблиц
-$fofm = mysql_query('select * from form');
-$category_transport = mysql_query('SELECT * FROM `category_transport`');
-$category_realty = mysql_query('SELECT * FROM `category_realty`');
+$fofm = mysqli_query($bd, 'select * from form');
+$category_transport = mysqli_query($bd, 'SELECT * FROM `category_transport`');
+$category_realty = mysqli_query($bd, 'SELECT * FROM `category_realty`');
 
 
 //блок циклов считываение таблиц в массивы
-while ($line_fofm = mysql_fetch_assoc($fofm)) {
+while ($line_fofm = mysqli_fetch_assoc($fofm)) {
     $Announcements["$line_fofm[id]"] = $line_fofm;
 }
-while ($line_transport = mysql_fetch_assoc($category_transport)) {
+while ($line_transport = mysqli_fetch_assoc($category_transport)) {
     $category["Транспорт"][$line_transport["category_transport"]] = $line_transport["category_transport"];
 }
-while ($line_realty = mysql_fetch_assoc($category_realty)) {
+while ($line_realty = mysqli_fetch_assoc($category_realty)) {
     $category["Недвижимость"][$line_realty["category_realty"]] = $line_realty["category_realty"];
 }
 
@@ -70,12 +72,13 @@ if (isset($_POST['main_form_submit'])) {
                         `allow_mails` = '$_POST[allow_mails]'   
                         WHERE `id` = '$id'";
 
-        mysql_query($insert_sql);
+        mysqli_query($bd, $insert_sql);
     } else { //иначе запись нового объявления в БД
         $insert_sql = "INSERT INTO `form` (`private`, `manager`, `email`, `seller_name`, `phone`, `location_id`, `category_id`, `title`, `description`, `price`,`allow_mails`)
         VALUES ('$_POST[private]', '$_POST[manager]', '$_POST[email]', '$_POST[seller_name]','$_POST[phone]', '$_POST[location_id]', '$_POST[category_id]',
                 '$_POST[title]', '$_POST[description]', '$_POST[price]', '$_POST[allow_mails]')";
-        mysql_query($insert_sql);
+//        mysqli_query($insert_sql);
+        mysqli_query($bd, $insert_sql);
     }
     header("Location: $Location");
     exit;
@@ -105,7 +108,7 @@ if ($_GET == TRUE) { //варианты действий при получени
     }
     if (isset($_GET['id_del'])) { //удаление объявления id из БД с ID = $id_del
         $id_del = $_GET['id_del'];
-        mysql_query('DELETE FROM `form`WHERE ((`id` = ' . $id_del . '))');
+        mysqli_query($bd,'DELETE FROM `form`WHERE ((`id` = ' . $id_del . '))');
         header("Location: $Location");
         exit;
     }
