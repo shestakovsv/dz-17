@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.28, created on 2015-08-17 12:54:12
+<?php /* Smarty version 2.6.28, created on 2015-08-26 09:21:16
          compiled from index.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('modifier', 'default', 'index.tpl', 16, false),array('function', 'html_options', 'index.tpl', 33, false),)), $this); ?>
@@ -48,7 +48,6 @@ unset($_smarty_tpl_vars);
     </select>
 </label>
 <br>
-
 <label>Категория
     <select title="Выберите категорию объявления"  name="category_id"> 
         <option >-- Выберите категорию объявления --</option>
@@ -71,7 +70,7 @@ unset($_smarty_tpl_vars);
 "  name="main_form_submit" class="vas-submit-input" > 
 </form>
 
-<br><br>
+
 
 
 <?php if (( ! empty ( $this->_tpl_vars['Announcements'] ) )): ?>

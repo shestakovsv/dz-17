@@ -3,7 +3,6 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 ini_set('display_errors', 1);
 header('Content-type: text/html; charset=utf-8');
 //$Location = basename($_SERVER['PHP_SELF']);
-
 ?>
 <form  method="post">
     <label>  Server name:<br>
@@ -19,14 +18,30 @@ header('Content-type: text/html; charset=utf-8');
         <input type="text" maxlength="40"  value="" name="database">
     </label><br><br>
 
+
+
     <input type="submit"   value="Instal" name="instal">
 </form>
+
+
+
 <?php
 if (isset($_POST['instal'])) {
-    $bd = @mysql_connect($_POST['server_name'], $_POST['user_name'], $_POST['password']) or die('неправильно заданы сервер,юзер или пароль');
-    echo 'подключение к серверу ' . $_POST['server_name'] . ' успешно выполненно<br>';
-    mysql_select_db($_POST['database']) or die('указанная база данных недоступна');
-    mysql_query('SET NAMES utf8');
+    $bd = @mysqli_connect($_POST['server_name'], $_POST['user_name'], $_POST['password'], $_POST['database']) or die('неправильно заданы сервер,юзер или пароль');
+    $sql = file_get_contents("advertisements.sql");
+    $res = mysqli_multi_query($bd, $sql) or die("Invalid query: " . mysql_error());
+
+
+
+//    $bd = @mysqli_connect($_POST['server_name'], $_POST['user_name'], $_POST['password'], $_POST['database']) or die('неправильно заданы сервер,юзер или пароль');
+//    echo 'подключение к серверу ' . $_POST['server_name'] . ' успешно выполненно<br>';
+//    //mysql_select_db($_POST['database']) or die('указанная база данных недоступна');
+//    mysqli_query($bd, 'SET NAMES utf8');
+//    $sql = file_get_contents('1.sql');
+
+
+
+
     echo 'подключение к базе данных ' . $_POST['database'] . ' успешно выполненно<br>';
     ?><a href="index.php">перейти на сайт</a><?php
 }

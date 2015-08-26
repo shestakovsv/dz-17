@@ -51,7 +51,7 @@
 <input type="submit" value="{$save|default:'Сохранить'}"  name="main_form_submit" class="vas-submit-input" > 
 </form>
 
-<br><br>
+
 
 {* Вывод объявлений в списке *}
 
