@@ -5,7 +5,7 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 ini_set('display_errors', 1);
 header('Content-type: text/html; charset=utf-8');
 
-
+// проводим настройки смарти
 $project_root = $_SERVER['DOCUMENT_ROOT'];
 $smarty_dir = $project_root . '/smarty/';
 
@@ -22,43 +22,40 @@ $smarty->cache_dir = $smarty_dir . 'cache';
 $smarty->config_dir = $smarty_dir . 'configs';
 
 
-$bd = mysql_connect('localhost', "test1", "123") or die('Сервер недоступен');
+//подключение к серверу SQL
+$bd = mysql_connect('localhost', "test1", "123") or die('Сервер недоступен'); //
 echo 'подключение к серверу успешно <br>';
+
+//подключение к базе данных
 mysql_select_db('advertisements') or die('база данных недоступна');
 mysql_query('SET NAMES utf8');
 echo 'подключение к базе данных advertisements успешно <br>';
-//mysql_select_db('category_transport') or die('база данных недоступна');
-//mysql_query('SET NAMES utf8');
-//echo 'подключение к базе данных category_transport успешно';
 
+// выбор таблиц
 $fofm = mysql_query('select * from form');
-$category_transport=mysql_query('SELECT * FROM `category_transport`');
-$category_realty=mysql_query('SELECT * FROM `category_realty`');
-//$category["Транспорт"]
-        
-print_r($category_transport) ;       
+$category_transport = mysql_query('SELECT * FROM `category_transport`');
+$category_realty = mysql_query('SELECT * FROM `category_realty`');
 
-while ($abc = mysql_fetch_assoc($fofm)) {
-    $Announcements["$abc[id]"] = $abc;
+
+//блок циклов считываение таблиц в массивы
+while ($line_fofm = mysql_fetch_assoc($fofm)) {
+    $Announcements["$line_fofm[id]"] = $line_fofm;
 }
-while ($abc2 = mysql_fetch_assoc($category_transport)) {
-    $category["Транспорт"][$abc2["category_transport"]] = $abc2["category_transport"];
+while ($line_transport = mysql_fetch_assoc($category_transport)) {
+    $category["Транспорт"][$line_transport["category_transport"]] = $line_transport["category_transport"];
 }
-while ($abc3 = mysql_fetch_assoc($category_realty)) {
-    $category["Недвижимость"][$abc3["category_realty"]] = $abc3["category_realty"];
+while ($line_realty = mysql_fetch_assoc($category_realty)) {
+    $category["Недвижимость"][$line_realty["category_realty"]] = $line_realty["category_realty"];
 }
-var_dump($category);
+
 
 
 $Location = basename($_SERVER['PHP_SELF']);
 
 //добавленых объявления в массив
 if (isset($_POST['main_form_submit'])) {
-    if (isset($_GET['id'])) {
+    if (isset($_GET['id'])) { //изменение объявления ID в БД
         $id = $_GET['id'];
-
-        echo 'bpvtybnm!!!!!!!!!!';
-
         $insert_sql = "UPDATE `form` SET
                         `private` = '$_POST[private]',
                         `manager` = '$_POST[manager]',
@@ -69,23 +66,23 @@ if (isset($_POST['main_form_submit'])) {
                         `category_id` = '$_POST[category_id]',
                         `title` = '$_POST[title]',
                         `description` = '$_POST[description]',
-                        `price` = '$_POST[price]'
+                        `price` = '$_POST[price]',
+                        `allow_mails` = '$_POST[allow_mails]'   
                         WHERE `id` = '$id'";
 
         mysql_query($insert_sql);
-    } else {
-        $insert_sql = "INSERT INTO `form` (`private`, `manager`, `email`, `seller_name`, `phone`, `location_id`, `category_id`, `title`, `description`, `price`)
+    } else { //иначе запись нового объявления в БД
+        $insert_sql = "INSERT INTO `form` (`private`, `manager`, `email`, `seller_name`, `phone`, `location_id`, `category_id`, `title`, `description`, `price`,`allow_mails`)
         VALUES ('$_POST[private]', '$_POST[manager]', '$_POST[email]', '$_POST[seller_name]','$_POST[phone]', '$_POST[location_id]', '$_POST[category_id]',
-                '$_POST[title]', '$_POST[description]', '$_POST[price]')";
+                '$_POST[title]', '$_POST[description]', '$_POST[price]', '$_POST[allow_mails]')";
         mysql_query($insert_sql);
-        echo '111111111111111111';
     }
     header("Location: $Location");
     exit;
 }
 
 
-if ($_GET == TRUE) {
+if ($_GET == TRUE) { //варианты действий при получении данных в GET
     if (isset($_GET['id'])) { // передача переменных в шаблон
         $id_key = $_GET['id'];
         $smarty->assign('seller_name', $Announcements[$id_key]['seller_name']);
@@ -98,19 +95,15 @@ if ($_GET == TRUE) {
         $smarty->assign('description', $Announcements[$id_key]['description']);
         $smarty->assign('manager', $Announcements[$id_key]['manager']);
         $smarty->assign('price', $Announcements[$id_key]['price']);
-        //$smarty->assign('private', $Announcements[$id_key]['private']);
         $private_checked = $private_checked = $Announcements[$id_key]['private'];
-
-        echo $Announcements[$id_key]['private'];
-
-        $checked = ($private_checked == 0) ? 'checked = ""' : "";
+        $checked = ($private_checked == 0) ? 'checked = ""' : ""; // обределение выбора в радиокнопке
         $smarty->assign('checked', $checked);
         $smarty->assign('save', 'Сохранить изменения');
-        if (isset($Announcements[$id_key]['allow_mails'])) {
+        if ($Announcements[$id_key]['allow_mails'] == 1) {//определение наличия галочки в "Я не хочу получать вопросы по объявлению по e-mail"
             $smarty->assign('allow_mails', 'CHECKED');
         }
     }
-    if (isset($_GET['id_del'])) {
+    if (isset($_GET['id_del'])) { //удаление объявления id из БД с ID = $id_del
         $id_del = $_GET['id_del'];
         mysql_query('DELETE FROM `form`WHERE ((`id` = ' . $id_del . '))');
         header("Location: $Location");
@@ -127,20 +120,6 @@ $location['Колывань'] = 'Колывань';
 
 
 
-//$category["Транспорт"]["Автомобили с пробегом"] = "Автомобили с пробегом";
-//$category["Транспорт"]["Новые автомобили"] = "Новые автомобили";
-//$category["Транспорт"]['Мотоциклы и мототехника'] = "Мотоциклы и мототехника";
-//$category["Транспорт"]['Грузовики и спецтехника'] = 'Грузовики и спецтехника';
-//$category["Транспорт"]['Водный транспорт'] = "Водный транспорт";
-//$category["Недвижимость"]['Квартиры'] = "Квартиры";
-//$category["Недвижимость"]['Комнаты'] = "Комнаты";
-//$category["Недвижимость"]['Дома, дачи, коттеджи'] = "Дома, дачи, коттеджи";
-//$category["Недвижимость"]['Земельные участки'] = "Земельные участки";
-//$category["Недвижимость"]['Гаражи и машиноместа'] = "Гаражи и машиноместа";
-//$category["Недвижимость"]['Коммерческая недвижимость'] = "Коммерческая недвижимость";
-//$category["Недвижимость"]['Недвижимость за рубежом'] = "Недвижимость за рубежом";
-
-
 $private['Частное лицо'] = "Частное лицо";
 $private['Компания'] = "Компания";
 
@@ -149,7 +128,7 @@ if (!empty($Announcements)) {
     $smarty->assign('Announcements', $Announcements);
 }
 
-
+//передача массивов в шаблон
 $smarty->assign('Location', basename($_SERVER['PHP_SELF']));
 $smarty->assign('location', $location);
 $smarty->assign('category', $category);

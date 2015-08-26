@@ -1,6 +1,6 @@
 <?php
-//error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
-//ini_set('display_errors', 1);
+error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
+ini_set('display_errors', 1);
 header('Content-type: text/html; charset=utf-8');
 //$Location = basename($_SERVER['PHP_SELF']);
 
@@ -23,10 +23,10 @@ header('Content-type: text/html; charset=utf-8');
 </form>
 <?php
 if (isset($_POST['instal'])) {
-    $bd = mysql_connect($_POST['server_name'], $_POST['user_name'], $_POST['password']) or die('неправильно заданы сервер,юзер или пароль');
-    echo 'подключение к серверу' . $_POST['server_name'] . 'успешно <br>';
-    mysql_select_db($_POST['database']) or die('указанная база данных');
+    $bd = @mysql_connect($_POST['server_name'], $_POST['user_name'], $_POST['password']) or die('неправильно заданы сервер,юзер или пароль');
+    echo 'подключение к серверу ' . $_POST['server_name'] . ' успешно выполненно<br>';
+    mysql_select_db($_POST['database']) or die('указанная база данных недоступна');
     mysql_query('SET NAMES utf8');
-    echo 'подключение к базе данных' . $_POST['database'] . 'успешно <br>';
+    echo 'подключение к базе данных ' . $_POST['database'] . ' успешно выполненно<br>';
     ?><a href="index.php">перейти на сайт</a><?php
 }
