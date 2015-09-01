@@ -10,8 +10,8 @@
 
 <form  method="post">
     <br>
-    <label><input type = "radio" checked = "" value = "1" name = "private">Частное лицо</label>
-    <label><input type = "radio" {$checked}  value = "0" name = "private">Компания</label>
+    <label><input type = "radio" {$checked_private|default:''} value = "1" name = "private">Частное лицо</label>
+    <label><input type = "radio" {$checked_company|default:''}  value = "0" name = "private">Компания</label>
     <br>
     <label><b>Контактное лицо</b></label> <input type="text" maxlength="40" value="{$manager|default:''}" name="manager">
     <br> 

@@ -21,44 +21,10 @@ $smarty->compile_dir = $smarty_dir . 'templates_c';
 $smarty->cache_dir = $smarty_dir . 'cache';
 $smarty->config_dir = $smarty_dir . 'configs';
 
+// определение функций
 
-//подключение к серверу SQL
-$bd = mysqli_connect('localhost', "test1", "123", "advertisements") or die('Сервер недоступен'); //
-echo 'подключение к серверу успешно <br>';
-
-
-
-//подключение к базе данных
-//mysql_select_db('advertisements') or die('база данных недоступна');
-mysqli_query($bd, 'SET NAMES utf8');
-echo 'подключение к базе данных advertisements успешно <br>';
-
-// выбор таблиц
-$fofm = mysqli_query($bd, 'select * from form');
-$category_transport = mysqli_query($bd, 'SELECT * FROM `category_transport`');
-$category_realty = mysqli_query($bd, 'SELECT * FROM `category_realty`');
-
-
-//блок циклов считываение таблиц в массивы
-while ($line_fofm = mysqli_fetch_assoc($fofm)) {
-    $Announcements["$line_fofm[id]"] = $line_fofm;
-}
-while ($line_transport = mysqli_fetch_assoc($category_transport)) {
-    $category["Транспорт"][$line_transport["category_transport"]] = $line_transport["category_transport"];
-}
-while ($line_realty = mysqli_fetch_assoc($category_realty)) {
-    $category["Недвижимость"][$line_realty["category_realty"]] = $line_realty["category_realty"];
-}
-
-
-
-$Location = basename($_SERVER['PHP_SELF']);
-
-//добавленых объявления в массив
-if (isset($_POST['main_form_submit'])) {
-    if (isset($_GET['id'])) { //изменение объявления ID в БД
-        $id = $_GET['id'];
-        $insert_sql = "UPDATE `form` SET
+function sql_UPDATE($bd, $id) {
+    $insert_sql = "UPDATE `form` SET
                         `private` = '$_POST[private]',
                         `manager` = '$_POST[manager]',
                         `email` = '$_POST[email]',
@@ -71,14 +37,65 @@ if (isset($_POST['main_form_submit'])) {
                         `price` = '$_POST[price]',
                         `allow_mails` = '$_POST[allow_mails]'   
                         WHERE `id` = '$id'";
+    mysqli_query($bd, $insert_sql);
+}
 
-        mysqli_query($bd, $insert_sql);
-    } else { //иначе запись нового объявления в БД
-        $insert_sql = "INSERT INTO `form` (`private`, `manager`, `email`, `seller_name`, `phone`, `location_id`, `category_id`, `title`, `description`, `price`,`allow_mails`)
+function sql_INSERT($bd) {
+    $insert_sql = "INSERT INTO `form` (`private`, `manager`, `email`, `seller_name`, `phone`, `location_id`, `category_id`, `title`, `description`, `price`,`allow_mails`)
         VALUES ('$_POST[private]', '$_POST[manager]', '$_POST[email]', '$_POST[seller_name]','$_POST[phone]', '$_POST[location_id]', '$_POST[category_id]',
                 '$_POST[title]', '$_POST[description]', '$_POST[price]', '$_POST[allow_mails]')";
-//        mysqli_query($insert_sql);
-        mysqli_query($bd, $insert_sql);
+    mysqli_query($bd, $insert_sql);
+}
+
+function sql_DELETE($bd) {
+    $id_del = $_GET['id_del'];
+    mysqli_query($bd, 'DELETE FROM `form`WHERE ((`id` = ' . $id_del . '))');
+}
+
+// загрузка данных из фала server_name,user_name, password, database
+$filename = './User.txt';
+if (file_exists($filename)) {
+    $temp_str = file_get_contents('./User.txt');
+    if (isset($temp_str)) {
+        $User = unserialize(file_get_contents('./User.txt')); // действие в случае удачи
+    } else {
+        exit('Ошибка чтения файла'); // или другое действие при неудачном чтении файла
+    }
+}
+
+
+
+//подключение к серверу SQL
+$bd = @mysqli_connect($User['server_name'], $User['user_name'], $User['password'], $User['database']) or die('<a href="instal.php">проверьте введеные данные</a> - Сервер недоступен');
+
+mysqli_query($bd, 'SET NAMES utf8');
+
+
+// выбор таблиц
+$form = mysqli_query($bd, 'select * from form');
+$category_table = mysqli_query($bd, 'SELECT * FROM `category`');
+$sity_table = mysqli_query($bd, 'SELECT * FROM `sity`');
+
+
+//блок циклов считываение таблиц в массивы
+while ($line_form = mysqli_fetch_assoc($form)) {
+    $Announcements["$line_form[id]"] = $line_form;}
+while ($line_sity = mysqli_fetch_assoc($sity_table)) {
+    $location[$line_sity["location"]] = $line_sity["location"];}
+while ($line_category = mysqli_fetch_assoc($category_table)) {
+    $category[$line_category["subcategory"]][$line_category["id"]] = $line_category["category"];
+}
+
+
+$Location = basename($_SERVER['PHP_SELF']);
+
+//добавленых объявления в массив
+if (isset($_POST['main_form_submit'])) {
+    if (isset($_GET['id'])) { //изменение объявления ID в БД
+        $id = $_GET['id'];
+        sql_UPDATE($bd, $id);
+    } else { //иначе запись нового объявления в БД
+        sql_INSERT($bd);
     }
     header("Location: $Location");
     exit;
@@ -99,27 +116,24 @@ if ($_GET == TRUE) { //варианты действий при получени
         $smarty->assign('manager', $Announcements[$id_key]['manager']);
         $smarty->assign('price', $Announcements[$id_key]['price']);
         $private_checked = $private_checked = $Announcements[$id_key]['private'];
-        $checked = ($private_checked == 0) ? 'checked = ""' : ""; // обределение выбора в радиокнопке
-        $smarty->assign('checked', $checked);
+        if ($private_checked == 1) {
+            $checked_private = 'checked = ""';
+            $smarty->assign('checked_private', $checked_private);
+        } else {
+            $checked_company = 'checked = ""';
+            $smarty->assign('checked_company', $checked_company);
+        }
         $smarty->assign('save', 'Сохранить изменения');
         if ($Announcements[$id_key]['allow_mails'] == 1) {//определение наличия галочки в "Я не хочу получать вопросы по объявлению по e-mail"
             $smarty->assign('allow_mails', 'CHECKED');
         }
     }
     if (isset($_GET['id_del'])) { //удаление объявления id из БД с ID = $id_del
-        $id_del = $_GET['id_del'];
-        mysqli_query($bd,'DELETE FROM `form`WHERE ((`id` = ' . $id_del . '))');
+        sql_DELETE($bd);
         header("Location: $Location");
         exit;
     }
 }
-
-
-$location['Новосибирск'] = 'Новосибирск';
-$location['Барабинск'] = 'Барабинск';
-$location['Бердск'] = 'Бердск';
-$location['Искитим'] = 'Искитим';
-$location['Колывань'] = 'Колывань';
 
 
 
