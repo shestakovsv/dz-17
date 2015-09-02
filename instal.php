@@ -36,7 +36,7 @@ function User_serialize($User) {
 <?php
 if (isset($_POST['instal'])) {
     $bd = @mysqli_connect($_POST['server_name'], $_POST['user_name'], $_POST['password'], $_POST['database']) or die('неправильно заданы сервер,юзер или пароль');
-    $sql = file_get_contents("advertisements.sql");
+    $sql = file_get_contents("advertisements(3).sql");
     $res = mysqli_multi_query($bd, $sql) or die("Invalid query: " . mysql_error());
 
 
@@ -45,7 +45,7 @@ if (isset($_POST['instal'])) {
     $User['user_name'] = $_POST['user_name'];
     $User['password'] = $_POST['password'];
     $User['database'] = $_POST['database'];
-    print_r($User);
+    //print_r($User);
     User_serialize($User);
 
 

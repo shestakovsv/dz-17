@@ -1,0 +1,1 @@
+a:4:{s:11:"server_name";s:9:"localhost";s:9:"user_name";s:5:"test1";s:8:"password";s:3:"123";s:8:"database";s:14:"advertisements";}
