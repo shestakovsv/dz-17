@@ -44,28 +44,23 @@ $bd = @mysqli_connect($User['server_name'], $User['user_name'], $User['password'
 mysqli_query($bd, 'SET NAMES utf8');
 
 
-// выбор таблиц function table(bd, name_table, name_table_sql)
-table($bd, 'form', 'form');
-table($bd, 'category_table', 'category');
-table($bd, 'sity_table', 'sity');
-
-
 $Location = basename($_SERVER['PHP_SELF']);
 
 //добавленых объявления в массив
 if (isset($_POST['main_form_submit'])) {
+    $post_date = $_POST;
     if (isset($_GET['id'])) { //изменение объявления ID в БД
         $id = $_GET['id'];
-        sql_UPDATE($bd, $id);
+        sql_UPDATE($bd, $id, $post_date);
     } else { //иначе запись нового объявления в БД
-        $post_date = $_POST;
         sql_INSERT($bd, $post_date);
     }
     header("Location: $Location");
     exit;
 }
 
-table_form($form);//подключение таблицы заполненных форм
+$Announcements = table_form($bd); //подключение таблицы заполненных форм
+
 
 if ($_GET == TRUE) { //варианты действий при получении данных в GET
     if (isset($_GET['id'])) { // передача переменных в шаблон
@@ -88,6 +83,8 @@ if ($_GET == TRUE) { //варианты действий при получени
         } else {
             $checked_company = 'checked = ""';
             $smarty->assign('checked_company', $checked_company);
+            $checked_private = '';
+            $smarty->assign('checked_private', $checked_private);
         }
         $smarty->assign('save', 'Сохранить изменения');
         if ($Announcements[$id_key]['allow_mails'] == 1) {//определение наличия галочки в "Я не хочу получать вопросы по объявлению по e-mail"
@@ -108,8 +105,9 @@ $private['Частное лицо'] = "Частное лицо";
 $private['Компания'] = "Компания";
 
 //подключение таблиц городов и категорий
-table_sity($sity_table);
-table_category($category_table);
+
+$location = table_sity($bd);
+$category = table_category($bd);
 
 if (!empty($Announcements)) {
     $smarty->assign('Announcements', $Announcements);

@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.28, created on 2015-09-03 03:02:17
+<?php /* Smarty version 2.6.28, created on 2015-09-03 10:29:04
          compiled from index.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('modifier', 'default', 'index.tpl', 13, false),array('function', 'html_options', 'index.tpl', 33, false),)), $this); ?>
@@ -17,7 +17,7 @@ unset($_smarty_tpl_vars);
 
 <form  method="post">
     <br>
-    <label><input type = "radio" <?php echo ((is_array($_tmp=@$this->_tpl_vars['checked_private'])) ? $this->_run_mod_handler('default', true, $_tmp, 'checked') : smarty_modifier_default($_tmp, 'checked')); ?>
+    <label><input type = "radio" <?php echo ((is_array($_tmp=@$this->_tpl_vars['checked_private'])) ? $this->_run_mod_handler('default', true, $_tmp, 'checked = ""') : smarty_modifier_default($_tmp, 'checked = ""')); ?>
  value = "1" name = "private">Частное лицо</label>
     <label><input type = "radio" <?php echo ((is_array($_tmp=@$this->_tpl_vars['checked_company'])) ? $this->_run_mod_handler('default', true, $_tmp, '') : smarty_modifier_default($_tmp, '')); ?>
   value = "0" name = "private">Компания</label>
