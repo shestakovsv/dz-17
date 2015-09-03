@@ -22,35 +22,8 @@ $smarty->cache_dir = $smarty_dir . 'cache';
 $smarty->config_dir = $smarty_dir . 'configs';
 
 // определение функций
+include 'functions.php';
 
-function sql_UPDATE($bd, $id) {
-    $insert_sql = "UPDATE `form` SET
-                        `private` = '$_POST[private]',
-                        `manager` = '$_POST[manager]',
-                        `email` = '$_POST[email]',
-                        `seller_name` = '$_POST[seller_name]',
-                        `phone` = '$_POST[phone]',
-                        `location_id` = '$_POST[location_id]',
-                        `category_id` = '$_POST[category_id]',
-                        `title` = '$_POST[title]',
-                        `description` = '$_POST[description]',
-                        `price` = '$_POST[price]',
-                        `allow_mails` = '$_POST[allow_mails]'   
-                        WHERE `id` = '$id'";
-    mysqli_query($bd, $insert_sql);
-}
-
-function sql_INSERT($bd) {
-    $insert_sql = "INSERT INTO `form` (`private`, `manager`, `email`, `seller_name`, `phone`, `location_id`, `category_id`, `title`, `description`, `price`,`allow_mails`)
-        VALUES ('$_POST[private]', '$_POST[manager]', '$_POST[email]', '$_POST[seller_name]','$_POST[phone]', '$_POST[location_id]', '$_POST[category_id]',
-                '$_POST[title]', '$_POST[description]', '$_POST[price]', '$_POST[allow_mails]')";
-    mysqli_query($bd, $insert_sql);
-}
-
-function sql_DELETE($bd) {
-    $id_del = $_GET['id_del'];
-    mysqli_query($bd, 'DELETE FROM `form`WHERE ((`id` = ' . $id_del . '))');
-}
 
 // загрузка данных из фала server_name,user_name, password, database
 $filename = './User.txt';
@@ -71,20 +44,10 @@ $bd = @mysqli_connect($User['server_name'], $User['user_name'], $User['password'
 mysqli_query($bd, 'SET NAMES utf8');
 
 
-// выбор таблиц
-$form = mysqli_query($bd, 'select * from form');
-$category_table = mysqli_query($bd, 'SELECT * FROM `category`');
-$sity_table = mysqli_query($bd, 'SELECT * FROM `sity`');
-
-
-//блок циклов считываение таблиц в массивы
-while ($line_form = mysqli_fetch_assoc($form)) {
-    $Announcements["$line_form[id]"] = $line_form;}
-while ($line_sity = mysqli_fetch_assoc($sity_table)) {
-    $location[$line_sity["location"]] = $line_sity["location"];}
-while ($line_category = mysqli_fetch_assoc($category_table)) {
-    $category[$line_category["subcategory"]][$line_category["id"]] = $line_category["category"];
-}
+// выбор таблиц function table(bd, name_table, name_table_sql)
+table($bd, 'form', 'form');
+table($bd, 'category_table', 'category');
+table($bd, 'sity_table', 'sity');
 
 
 $Location = basename($_SERVER['PHP_SELF']);
@@ -95,15 +58,18 @@ if (isset($_POST['main_form_submit'])) {
         $id = $_GET['id'];
         sql_UPDATE($bd, $id);
     } else { //иначе запись нового объявления в БД
-        sql_INSERT($bd);
+        $post_date = $_POST;
+        sql_INSERT($bd, $post_date);
     }
     header("Location: $Location");
     exit;
 }
 
+table_form($form);//подключение таблицы заполненных форм
 
 if ($_GET == TRUE) { //варианты действий при получении данных в GET
     if (isset($_GET['id'])) { // передача переменных в шаблон
+        //table_form($form);
         $id_key = $_GET['id'];
         $smarty->assign('seller_name', $Announcements[$id_key]['seller_name']);
         $smarty->assign('email', $Announcements[$id_key]['email']);
@@ -129,7 +95,8 @@ if ($_GET == TRUE) { //варианты действий при получени
         }
     }
     if (isset($_GET['id_del'])) { //удаление объявления id из БД с ID = $id_del
-        sql_DELETE($bd);
+        $id_del = $_GET['id_del'];
+        sql_DELETE($bd, $id_del);
         header("Location: $Location");
         exit;
     }
@@ -140,10 +107,14 @@ if ($_GET == TRUE) { //варианты действий при получени
 $private['Частное лицо'] = "Частное лицо";
 $private['Компания'] = "Компания";
 
+//подключение таблиц городов и категорий
+table_sity($sity_table);
+table_category($category_table);
 
 if (!empty($Announcements)) {
     $smarty->assign('Announcements', $Announcements);
 }
+
 
 //передача массивов в шаблон
 $smarty->assign('Location', basename($_SERVER['PHP_SELF']));
