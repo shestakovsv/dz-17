@@ -4,6 +4,7 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 ini_set('display_errors', 1);
 header('Content-type: text/html; charset=utf-8');
 
+//function sql_UPDATE_formTable_in_bd($bd, $id, $post_date) {
 function sql_UPDATE($bd, $id, $post_date) {
     $insert_sql = "UPDATE `form` SET
                         `private` = '$post_date[private]',
@@ -32,21 +33,18 @@ function sql_DELETE($bd, $id_del) {
     mysqli_query($bd, 'DELETE FROM `form`WHERE ((`id` = ' . $id_del . '))');
 }
 
-//function table($bd, $name_table, $name_table_sql) {
-//    global $$name_table;
-//    $$name_table = mysqli_query($bd, "select * from $name_table_sql");
-//}
 //блок циклов считываение таблиц в массивы
-
-function table_form($bd) {
+function translation_table_form_in_array_Announcements($bd) {
     $form = mysqli_query($bd, "select * from form");
     while ($line_form = mysqli_fetch_assoc($form)) {
         $Announcements["$line_form[id]"] = $line_form;
     }
-    return $Announcements;
+    if (!empty($Announcements)) {
+        return $Announcements;
+    }
 }
 
-function table_sity($bd) {
+function translation_table_sity_in_array_location($bd) {
     $sity_table = mysqli_query($bd, "select * from sity");
     while ($line_sity = mysqli_fetch_assoc($sity_table)) {
         $location[$line_sity["location"]] = $line_sity["location"];
@@ -56,7 +54,7 @@ function table_sity($bd) {
     return $location;
 }
 
-function table_category($bd) {
+function translation_table_category_in_array_category($bd) {
     $category_table = mysqli_query($bd, "select * from category");
     while ($line_category = mysqli_fetch_assoc($category_table)) {
         $category[$line_category["subcategory"]][$line_category["id"]] = $line_category["category"];

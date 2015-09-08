@@ -1,6 +1,5 @@
 
 <?php
-
 error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 ini_set('display_errors', 1);
 header('Content-type: text/html; charset=utf-8');
@@ -32,7 +31,9 @@ if (file_exists($filename)) {
     if (isset($temp_str)) {
         $User = unserialize(file_get_contents('./User.txt')); // действие в случае удачи
     } else {
+        ?><a href="instal.php">Проверьте введенные данные</a><?php
         exit('Ошибка чтения файла'); // или другое действие при неудачном чтении файла
+        //header("Location: instal.php");
     }
 }
 
@@ -59,66 +60,40 @@ if (isset($_POST['main_form_submit'])) {
     exit;
 }
 
-$Announcements = table_form($bd); //подключение таблицы заполненных форм
+
 
 
 if ($_GET == TRUE) { //варианты действий при получении данных в GET
-    if (isset($_GET['id'])) { // передача переменных в шаблон
-        //table_form($form);
-        $id_key = $_GET['id'];
-        $smarty->assign('seller_name', $Announcements[$id_key]['seller_name']);
-        $smarty->assign('email', $Announcements[$id_key]['email']);
-        $smarty->assign('phone', $Announcements[$id_key]['phone']);
-        $smarty->assign('email', $Announcements[$id_key]['email']);
-        $smarty->assign('location_id', $Announcements[$id_key]['location_id']);
-        $smarty->assign('category_id', $Announcements[$id_key]['category_id']);
-        $smarty->assign('title', $Announcements[$id_key]['title']);
-        $smarty->assign('description', $Announcements[$id_key]['description']);
-        $smarty->assign('manager', $Announcements[$id_key]['manager']);
-        $smarty->assign('price', $Announcements[$id_key]['price']);
-        $private_checked = $private_checked = $Announcements[$id_key]['private'];
-        if ($private_checked == 1) {
-            $checked_private = 'checked = ""';
-            $smarty->assign('checked_private', $checked_private);
-        } else {
-            $checked_company = 'checked = ""';
-            $smarty->assign('checked_company', $checked_company);
-            $checked_private = '';
-            $smarty->assign('checked_private', $checked_private);
-        }
-        $smarty->assign('save', 'Сохранить изменения');
-        if ($Announcements[$id_key]['allow_mails'] == 1) {//определение наличия галочки в "Я не хочу получать вопросы по объявлению по e-mail"
-            $smarty->assign('allow_mails', 'CHECKED');
-        }
-    }
     if (isset($_GET['id_del'])) { //удаление объявления id из БД с ID = $id_del
         $id_del = $_GET['id_del'];
         sql_DELETE($bd, $id_del);
         header("Location: $Location");
         exit;
     }
+    if (isset($_GET['id'])) { // передача переменных в шаблон
+        $id_key = $_GET['id'];
+        $smarty->assign('id_key', $id_key);
+        $smarty->assign('save', 'Сохранить изменения');
+        $Announcements = translation_table_form_in_array_Announcements($bd);
+    }
 }
 
 
 
-$private['Частное лицо'] = "Частное лицо";
-$private['Компания'] = "Компания";
 
 //подключение таблиц городов и категорий
 
-$location = table_sity($bd);
-$category = table_category($bd);
-
-if (!empty($Announcements)) {
-    $smarty->assign('Announcements', $Announcements);
-}
+$location = translation_table_sity_in_array_location($bd);
+$category = translation_table_category_in_array_category($bd);
+$Announcements = translation_table_form_in_array_Announcements($bd); //подключение таблицы заполненных форм
 
 
 //передача массивов в шаблон
 $smarty->assign('Location', basename($_SERVER['PHP_SELF']));
 $smarty->assign('location', $location);
 $smarty->assign('category', $category);
-$smarty->assign('private', $private);
+$smarty->assign('Announcements', $Announcements);
+
 
 $smarty->display('index.tpl');
 
