@@ -8,6 +8,13 @@ header('Content-type: text/html; charset=utf-8');
 $project_root = $_SERVER['DOCUMENT_ROOT'];
 $smarty_dir = $project_root . '/smarty/';
 
+//подключение библиотеки DBsimple
+require_once $project_root . "/dbsimple/config.php";
+require_once "DbSimple/Generic.php";
+
+
+
+//require_once ($project_root.'/FirePHPCore/FirePHP.class.php');
 // put full path to Smarty.class.php
 require('smarty/libs/Smarty.class.php');
 $smarty = new Smarty();
@@ -35,14 +42,35 @@ if (file_exists($filename)) {
         exit('Ошибка чтения файла'); // или другое действие при неудачном чтении файла
         //header("Location: instal.php");
     }
+} else {
+    ?><a href="instal.php">Проверьте введенные данные</a><?php
+    exit('Ошибка чтения файла');
 }
 
 
-
 //подключение к серверу SQL
-$bd = @mysqli_connect($User['server_name'], $User['user_name'], $User['password'], $User['database']) or die('<a href="instal.php">проверьте введеные данные</a> - Сервер недоступен');
+//$bd = @mysqli_connect($User['server_name'], $User['user_name'], $User['password'], $User['database']) or die('<a href="instal.php">проверьте введеные данные</a> - Сервер недоступен');
+//$bd = DbSimple_Generic::connect("mysqli://$User[user_name]:$User[password]@$User[server_name]/$User[database]");
+$bd = DbSimple_Generic::connect('mysqli://test1:123@127.0.01/advertisements');
 
-mysqli_query($bd, 'SET NAMES utf8');
+//var_dump($bd);
+// Устанавливаем обработчик ошибок.
+$bd->setErrorHandler('databaseErrorHandler');
+
+// Код обработчика ошибок SQL.
+function databaseErrorHandler($message, $info) {
+    // Если использовалась @, ничего не делать.
+    if (!error_reporting())
+        return;
+    // Выводим подробную информацию об ошибке.
+    echo "SQL Error: $message<br><pre>";
+    print_r($info);
+    echo "</pre>";
+    exit();
+}
+
+//mysqli_query($bd, 'SET NAMES utf8');
+$bd->query('SET NAMES utf8');
 
 
 $Location = basename($_SERVER['PHP_SELF']);
@@ -74,7 +102,7 @@ if ($_GET == TRUE) { //варианты действий при получени
         $id_key = $_GET['id'];
         $smarty->assign('id_key', $id_key);
         $smarty->assign('save', 'Сохранить изменения');
-        $Announcements = translation_table_form_in_array_Announcements($bd);
+        //$Announcements = translation_table_form_in_array_Announcements($bd);
     }
 }
 
@@ -86,8 +114,6 @@ if ($_GET == TRUE) { //варианты действий при получени
 $location = translation_table_sity_in_array_location($bd);
 $category = translation_table_category_in_array_category($bd);
 $Announcements = translation_table_form_in_array_Announcements($bd); //подключение таблицы заполненных форм
-
-
 //передача массивов в шаблон
 $smarty->assign('Location', basename($_SERVER['PHP_SELF']));
 $smarty->assign('location', $location);
