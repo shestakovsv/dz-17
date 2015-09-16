@@ -1,8 +1,5 @@
 <?php
 
-error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
-ini_set('display_errors', 1);
-header('Content-type: text/html; charset=utf-8');
 
 function sql_UPDATE($bd, $id, $post_date) {
     $bd->query('UPDATE form SET ?a WHERE id =?', $post_date, $id);

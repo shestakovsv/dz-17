@@ -1,5 +1,8 @@
 
 <?php
+error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
+ini_set('display_errors', 1);
+header('Content-type: text/html; charset=utf-8');
 
 
 // проводим настройки смарти
@@ -69,7 +72,7 @@ $Location = basename($_SERVER['PHP_SELF']);
 if (isset($_POST['main_form_submit'])) {
     $post_date = $_POST;
     if (empty($post_date["allow_mails"])) {
-        $post_date["allow_mails"]='';
+        $post_date["allow_mails"] = 0;
     }
     unset($post_date["main_form_submit"]);
     if (isset($_GET['id'])) { //изменение объявления ID в БД
@@ -78,8 +81,8 @@ if (isset($_POST['main_form_submit'])) {
     } else { //иначе запись нового объявления в БД
         sql_INSERT($bd, $post_date);
     }
-//    header("Location: $Location");
-//    exit;
+    header("Location: $Location");
+    exit;
 }
 
 
@@ -87,8 +90,6 @@ if (isset($_POST['main_form_submit'])) {
 if (isset($_GET['id_del'])) { //удаление объявления id из БД с ID = $id_del
     $id_del = $_GET['id_del'];
     sql_DELETE($bd, $id_del);
-    header("Location: $Location");
-    exit;
 }
 $Announcements = translation_table_form_in_array_Announcements($bd); //подключение таблицы заполненных форм
 $firePHP->table('Table Lable', $Announcements);
