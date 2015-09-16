@@ -13,9 +13,6 @@ require_once $project_root . "/dbsimple/config.php";
 require_once "DbSimple/Generic.php";
 
 
-
-//require_once ($project_root.'/FirePHPCore/FirePHP.class.php');
-// put full path to Smarty.class.php
 require('smarty/libs/Smarty.class.php');
 $smarty = new Smarty();
 
@@ -49,11 +46,8 @@ if (file_exists($filename)) {
 
 
 //подключение к серверу SQL
-//$bd = @mysqli_connect($User['server_name'], $User['user_name'], $User['password'], $User['database']) or die('<a href="instal.php">проверьте введеные данные</a> - Сервер недоступен');
-//$bd = DbSimple_Generic::connect("mysqli://$User[user_name]:$User[password]@$User[server_name]/$User[database]");
-$bd = DbSimple_Generic::connect('mysqli://test1:123@127.0.01/advertisements');
+$bd = DbSimple_Generic::connect("mysqli://$User[user_name]:$User[password]@$User[server_name]/$User[database]");
 
-//var_dump($bd);
 // Устанавливаем обработчик ошибок.
 $bd->setErrorHandler('databaseErrorHandler');
 
@@ -69,7 +63,6 @@ function databaseErrorHandler($message, $info) {
     exit();
 }
 
-//mysqli_query($bd, 'SET NAMES utf8');
 $bd->query('SET NAMES utf8');
 
 
@@ -89,31 +82,26 @@ if (isset($_POST['main_form_submit'])) {
 }
 
 
-
-
-if ($_GET == TRUE) { //варианты действий при получении данных в GET
-    if (isset($_GET['id_del'])) { //удаление объявления id из БД с ID = $id_del
-        $id_del = $_GET['id_del'];
-        sql_DELETE($bd, $id_del);
-        header("Location: $Location");
-        exit;
-    }
-    if (isset($_GET['id'])) { // передача переменных в шаблон
-        $id_key = $_GET['id'];
-        $smarty->assign('id_key', $id_key);
+//варианты действий при получении данных в GET
+if (isset($_GET['id_del'])) { //удаление объявления id из БД с ID = $id_del
+    $id_del = $_GET['id_del'];
+    sql_DELETE($bd, $id_del);
+    header("Location: $Location");
+    exit;
+}
+$Announcements = translation_table_form_in_array_Announcements($bd); //подключение таблицы заполненных форм
+if (isset($_GET['id'])) { // передача переменных в шаблон
+    $id = $_GET['id'];
+    if (isset($Announcements[$id])) {
+        $smarty->assign('Announcements_show', $Announcements[$id]);
         $smarty->assign('save', 'Сохранить изменения');
-        //$Announcements = translation_table_form_in_array_Announcements($bd);
     }
 }
-
-
-
-
+//}
 //подключение таблиц городов и категорий
 
 $location = translation_table_sity_in_array_location($bd);
 $category = translation_table_category_in_array_category($bd);
-$Announcements = translation_table_form_in_array_Announcements($bd); //подключение таблицы заполненных форм
 //передача массивов в шаблон
 $smarty->assign('Location', basename($_SERVER['PHP_SELF']));
 $smarty->assign('location', $location);

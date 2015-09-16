@@ -9,8 +9,6 @@ function User_serialize($User) {
         exit('Ошибка записи файла');
     }
 }
-
-//$Location = basename($_SERVER['PHP_SELF']);
 ?>
 <form  method="post">
     <label>  Server name:<br>
@@ -45,7 +43,6 @@ if (isset($_POST['instal'])) {
     $User['user_name'] = $_POST['user_name'];
     $User['password'] = $_POST['password'];
     $User['database'] = $_POST['database'];
-    //print_r($User);
     User_serialize($User);
 
 
