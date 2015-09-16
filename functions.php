@@ -39,3 +39,14 @@ function translation_table_category_in_array_category($bd) {
     $category = $bd->selectCol('SELECT subcategory AS ARRAY_KEY_1,id AS ARRAY_KEY_2 ,category  FROM category');
     return $category;
 }
+
+function myLogger($db, $sql, $caller) {
+    global $firePHP;
+    if (isset($caller['file'])) {
+        $firePHP->group("at " . @$caller['file'] . ' line ' . @$caller['line']);
+    }
+    $firePHP->log($sql);
+    if (isset($caller['file'])) {
+        $firePHP->groupEnd();
+    }
+}

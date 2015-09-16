@@ -5,13 +5,21 @@ ini_set('display_errors', 1);
 header('Content-type: text/html; charset=utf-8');
 
 // проводим настройки смарти
-$project_root = $_SERVER['DOCUMENT_ROOT'];
+//$project_root = $_SERVER['DOCUMENT_ROOT'];
+$project_root = __DIR__;
 $smarty_dir = $project_root . '/smarty/';
 
 //подключение библиотеки DBsimple
 require_once $project_root . "/dbsimple/config.php";
 require_once "DbSimple/Generic.php";
 
+//подключение библиотеки Firephp
+require_once ($project_root . "/FirePHPCore/FirePHP.class.php");
+//инициализация класса Firephp
+$firePHP = FirePHP::getInstance(true);
+//Устанавливаем активность. Если выключить (false), то отладочные сообщения не будут
+//отображаться в FireBug
+$firePHP->setEnabled(true);
 
 require('smarty/libs/Smarty.class.php');
 $smarty = new Smarty();
@@ -50,6 +58,7 @@ $bd = DbSimple_Generic::connect("mysqli://$User[user_name]:$User[password]@$User
 
 // Устанавливаем обработчик ошибок.
 $bd->setErrorHandler('databaseErrorHandler');
+$bd->setLogger('myLogger');
 
 // Код обработчика ошибок SQL.
 function databaseErrorHandler($message, $info) {
@@ -90,6 +99,8 @@ if (isset($_GET['id_del'])) { //удаление объявления id из Б
     exit;
 }
 $Announcements = translation_table_form_in_array_Announcements($bd); //подключение таблицы заполненных форм
+$firePHP->table('Table Lable', $Announcements);
+
 if (isset($_GET['id'])) { // передача переменных в шаблон
     $id = $_GET['id'];
     if (isset($Announcements[$id])) {
@@ -97,7 +108,8 @@ if (isset($_GET['id'])) { // передача переменных в шабло
         $smarty->assign('save', 'Сохранить изменения');
     }
 }
-//}
+
+
 //подключение таблиц городов и категорий
 
 $location = translation_table_sity_in_array_location($bd);
@@ -110,5 +122,8 @@ $smarty->assign('Announcements', $Announcements);
 
 
 $smarty->display('index.tpl');
+
+
+
 
 
