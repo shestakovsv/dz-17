@@ -1,8 +1,6 @@
 
 <?php
-error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
-ini_set('display_errors', 1);
-header('Content-type: text/html; charset=utf-8');
+
 
 // проводим настройки смарти
 //$project_root = $_SERVER['DOCUMENT_ROOT'];
@@ -60,17 +58,7 @@ $bd = DbSimple_Generic::connect("mysqli://$User[user_name]:$User[password]@$User
 $bd->setErrorHandler('databaseErrorHandler');
 $bd->setLogger('myLogger');
 
-// Код обработчика ошибок SQL.
-function databaseErrorHandler($message, $info) {
-    // Если использовалась @, ничего не делать.
-    if (!error_reporting())
-        return;
-    // Выводим подробную информацию об ошибке.
-    echo "SQL Error: $message<br><pre>";
-    print_r($info);
-    echo "</pre>";
-    exit();
-}
+
 
 $bd->query('SET NAMES utf8');
 
@@ -80,14 +68,18 @@ $Location = basename($_SERVER['PHP_SELF']);
 //добавленых объявления в массив
 if (isset($_POST['main_form_submit'])) {
     $post_date = $_POST;
+    if (empty($post_date["allow_mails"])) {
+        $post_date["allow_mails"]='';
+    }
+    unset($post_date["main_form_submit"]);
     if (isset($_GET['id'])) { //изменение объявления ID в БД
         $id = $_GET['id'];
         sql_UPDATE($bd, $id, $post_date);
     } else { //иначе запись нового объявления в БД
         sql_INSERT($bd, $post_date);
     }
-    header("Location: $Location");
-    exit;
+//    header("Location: $Location");
+//    exit;
 }
 
 

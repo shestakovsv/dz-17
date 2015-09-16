@@ -5,7 +5,6 @@ ini_set('display_errors', 1);
 header('Content-type: text/html; charset=utf-8');
 
 function sql_UPDATE($bd, $id, $post_date) {
-    unset($post_date["main_form_submit"]);
     $bd->query('UPDATE form SET ?a WHERE id =?', $post_date, $id);
     if (empty($post_date["allow_mails"])) {
         $value = '';
@@ -14,7 +13,6 @@ function sql_UPDATE($bd, $id, $post_date) {
 }
 
 function sql_INSERT($bd, $post_date) {
-    unset($post_date[main_form_submit]);
     $bd->query('INSERT INTO form(?#) VALUES(?a)', array_keys($post_date), array_values($post_date));
 }
 
@@ -49,4 +47,16 @@ function myLogger($db, $sql, $caller) {
     if (isset($caller['file'])) {
         $firePHP->groupEnd();
     }
+}
+
+// Код обработчика ошибок SQL.
+function databaseErrorHandler($message, $info) {
+    // Если использовалась @, ничего не делать.
+    if (!error_reporting())
+        return;
+    // Выводим подробную информацию об ошибке.
+    echo "SQL Error: $message<br><pre>";
+    print_r($info);
+    echo "</pre>";
+    exit();
 }
