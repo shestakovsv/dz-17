@@ -6,14 +6,11 @@ header('Content-type: text/html; charset=utf-8');
 
 
 // проводим настройки смарти
-//$project_root = $_SERVER['DOCUMENT_ROOT'];
 $project_root = __DIR__;
 $smarty_dir = $project_root . '/smarty/';
-
 //подключение библиотеки DBsimple
 require_once $project_root . "/dbsimple/config.php";
 require_once "DbSimple/Generic.php";
-
 //подключение библиотеки Firephp
 require_once ($project_root . "/FirePHPCore/FirePHP.class.php");
 //инициализация класса Firephp
@@ -22,8 +19,8 @@ $firePHP = FirePHP::getInstance(true);
 //отображаться в FireBug
 $firePHP->setEnabled(true);
 
-require('smarty/libs/Smarty.class.php');
-$smarty = new Smarty();
+require('smarty/libs/Smarty.class.php'); //Подключение библиотек смарти
+$smarty = new Smarty(); //создание объекта смарти
 
 $smarty->compile_check = true; //true;
 $smarty->debugging = FALSE; //FALSE;
@@ -35,6 +32,8 @@ $smarty->config_dir = $smarty_dir . 'configs';
 
 // определение функций
 include 'functions.php';
+//определение классов
+include 'class.php';
 
 
 // загрузка данных из фала server_name,user_name, password, database
@@ -46,7 +45,6 @@ if (file_exists($filename)) {
     } else {
         ?><a href="instal.php">Проверьте введенные данные</a><?php
         exit('Ошибка чтения файла'); // или другое действие при неудачном чтении файла
-        //header("Location: instal.php");
     }
 } else {
     ?><a href="instal.php">Проверьте введенные данные</a><?php
@@ -63,7 +61,7 @@ $bd->setLogger('myLogger');
 
 
 
-$bd->query('SET NAMES utf8');
+$bd->query('SET NAMES utf8'); //установка кодировки utf8
 
 
 $Location = basename($_SERVER['PHP_SELF']);
@@ -75,15 +73,23 @@ if (isset($_POST['main_form_submit'])) {
         $post_date["allow_mails"] = 0;
     }
     unset($post_date["main_form_submit"]);
+
+    $adv = new fofm($post_date);
+
+//    var_dump($adv);
+
     if (isset($_GET['id'])) { //изменение объявления ID в БД
         $id = $_GET['id'];
         sql_UPDATE($bd, $id, $post_date);
     } else { //иначе запись нового объявления в БД
-        sql_INSERT($bd, $post_date);
+        //sql_INSERT($bd, $post_date);
+        $adv->sql_INSERT($bd);
     }
-    header("Location: $Location");
-    exit;
+//    header("Location: $Location");
+//    exit;
 }
+
+
 
 
 //варианты действий при получении данных в GET

@@ -10,7 +10,7 @@ require_once $project_root."/dbsimple/config.php";
 require_once "DbSimple/Generic.php";
 
 // Подключаемся к БД.
-$db = DbSimple_Generic::connect('mysqli://test1:123@localhost/advertisements');//DNS
+//$db = DbSimple_Generic::connect('mysqli://test1:123@localhost/advertisements');//DNS
 
 // Устанавливаем обработчик ошибок.
 $db->setErrorHandler('databaseErrorHandler');

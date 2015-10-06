@@ -1,17 +1,17 @@
 <?php
 
 
-function sql_UPDATE($bd, $id, $post_date) {
-    $bd->query('UPDATE form SET ?a WHERE id =?', $post_date, $id);
-    if (empty($post_date["allow_mails"])) {
-        $value = '';
-        $bd->query('UPDATE form SET allow_mails=? WHERE id =?', $value, $id);
-    }
-}
+//function sql_UPDATE($bd, $id, $post_date) {
+//    $bd->query('UPDATE form SET ?a WHERE id =?', $post_date, $id);
+//    if (empty($post_date["allow_mails"])) {
+//        $value = '';
+//        $bd->query('UPDATE form SET allow_mails=? WHERE id =?', $value, $id);
+//    }
+//}
 
-function sql_INSERT($bd, $post_date) {
-    $bd->query('INSERT INTO form(?#) VALUES(?a)', array_keys($post_date), array_values($post_date));
-}
+//function sql_INSERT($bd, $post_date) {
+//    $bd->query('INSERT INTO form(?#) VALUES(?a)', array_keys($post_date), array_values($post_date));
+//}
 
 function sql_DELETE($bd, $id_del) {
     $bd->select('DELETE FROM form WHERE id = ?', $id_del);
