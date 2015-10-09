@@ -4,9 +4,9 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 ini_set('display_errors', 1);
 header('Content-type: text/html; charset=utf-8');
 
-class fofm {
+class advertisement_class {
 
-    //public $id;
+    public $id;
     public $private;
     public $manager;
     public $email;
@@ -20,7 +20,7 @@ class fofm {
     public $allow_mails;
 
     function __construct($post_date) {
-        //$this->id = $post_date["id"];
+        $this->id = $post_date["id"];
         $this->private = $post_date["private"];
         $this->manager = $post_date["manager"];
         $this->email = $post_date["email"];
@@ -34,15 +34,13 @@ class fofm {
         $this->allow_mails = $post_date["allow_mails"];
     }
 
-    public function sql_INSERT($bd) {
-        $this->$bd->query('INSERT INTO form(?#) VALUES(?a)', array_keys($adv), array_values($adv));
+    function sql_INSERT($bd, $adv) {
+        $object_array = get_object_vars($adv);
+        $bd->query('INSERT INTO form(?#) VALUES(?a)', array_keys($object_array), array_values($object_array));
     }
 
-//    public function sql_UPDATE($bd, $id, $post_date) {
-//        $this->$bd->query('UPDATE form SET ?a WHERE id =?', $post_date, $id);
-//        if (empty($post_date["allow_mails"])) {
-//            $value = '';
-//            $this->$bd->query('UPDATE form SET allow_mails=? WHERE id =?', $value, $id);
-//        }
-//    }
+    function sql_DELETE($bd, $id_del) {
+        $this->$bd->select('DELETE FROM form WHERE id = ?', $id_del);
+    }
+
 }

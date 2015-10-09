@@ -1,28 +1,26 @@
 <?php
 
-
-//function sql_UPDATE($bd, $id, $post_date) {
-//    $bd->query('UPDATE form SET ?a WHERE id =?', $post_date, $id);
-//    if (empty($post_date["allow_mails"])) {
-//        $value = '';
-//        $bd->query('UPDATE form SET allow_mails=? WHERE id =?', $value, $id);
-//    }
-//}
-
-//function sql_INSERT($bd, $post_date) {
-//    $bd->query('INSERT INTO form(?#) VALUES(?a)', array_keys($post_date), array_values($post_date));
-//}
-
-function sql_DELETE($bd, $id_del) {
-    $bd->select('DELETE FROM form WHERE id = ?', $id_del);
+function sql_UPDATE($bd, $id, $post_date) {
+    $bd->query('UPDATE form SET ?a WHERE id =?', $post_date, $id);
+    if (empty($post_date["allow_mails"])) {
+        $value = '';
+        $bd->query('UPDATE form SET allow_mails=? WHERE id =?', $value, $id);
+    }
 }
 
-//блок циклов считываение таблиц в массивы
-function translation_table_form_in_array_Announcements($bd) {
-    $Announcements = $bd->select("select *,id AS ARRAY_KEY  from form");
+//блок циклов считываение таблиц в массив объектов
+function translation_table_form_in_array_objeckt_Announcements($bd) {
+    $Announcements_massiv = $bd->select("select *,id AS ARRAY_KEY  from form");
+    foreach ($Announcements_massiv as $key => $value) {
+        $Announcements[$key] = new advertisement_class($value);
+    }
     if (!empty($Announcements)) {
         return $Announcements;
     }
+}
+
+function sql_DELETE($bd, $id_del) {
+    $bd->select('DELETE FROM form WHERE id = ?', $id_del);
 }
 
 function translation_table_sity_in_array_location($bd) {
