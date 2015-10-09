@@ -39,8 +39,4 @@ class advertisement_class {
         $bd->query('INSERT INTO form(?#) VALUES(?a)', array_keys($object_array), array_values($object_array));
     }
 
-    function sql_DELETE($bd, $id_del) {
-        $this->$bd->select('DELETE FROM form WHERE id = ?', $id_del);
-    }
-
 }
