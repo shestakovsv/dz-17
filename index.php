@@ -91,7 +91,8 @@ if (isset($_POST['main_form_submit'])) {
 //варианты действий при получении данных в GET
 if (isset($_GET['id_del'])) { //удаление объявления id из БД с ID = $id_del
     $id_del = $_GET['id_del'];
-    sql_DELETE($bd, $id_del);
+//    sql_DELETE($bd, $id_del);
+    advertisement_class::sql_DELETE($bd, $id_del);
 }
 $Announcements = translation_table_form_in_array_objeckt_Announcements($bd); //подключение таблицы заполненных форм
 $firePHP->table('Table Lable', $Announcements);

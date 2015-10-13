@@ -19,9 +19,9 @@ function translation_table_form_in_array_objeckt_Announcements($bd) {
     }
 }
 
-function sql_DELETE($bd, $id_del) {
-    $bd->select('DELETE FROM form WHERE id = ?', $id_del);
-}
+//function sql_DELETE($bd, $id_del) {
+//    $bd->select('DELETE FROM form WHERE id = ?', $id_del);
+//}
 
 function translation_table_sity_in_array_location($bd) {
     $location = $bd->selectCol('SELECT location AS ARRAY_KEY,location FROM sity');
