@@ -76,7 +76,7 @@ if (isset($_POST['main_form_submit'])) {
     $adv = new advertisement_class($post_date);
     if (isset($_GET['id'])) { //изменение объявления ID в БД
         $id = $_GET['id'];
-        advertisement_class::sql_UPDATE($bd, $id, $post_date);
+        $adv->sql_UPDATE($bd, $id, $adv);
     } else { //иначе запись нового объявления в БД
         $adv->sql_INSERT($bd, $adv);
     }

@@ -43,9 +43,10 @@ class advertisement_class {
         $bd->select('DELETE FROM form WHERE id = ?', $id_del);
     }
 
-    static public function sql_UPDATE($bd, $id, $post_date) {
-        $bd->query('UPDATE form SET ?a WHERE id =?', $post_date, $id);
-        if (empty($post_date["allow_mails"])) {
+    public function sql_UPDATE($bd, $id, $adv) {
+        $object_array = get_object_vars($adv);
+        $bd->query('UPDATE form SET ?a WHERE id =?', $object_array, $id);
+        if (empty($object_array["allow_mails"])) {
             $value = '';
             $bd->query('UPDATE form SET allow_mails=? WHERE id =?', $value, $id);
         }
