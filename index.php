@@ -78,7 +78,7 @@ if (isset($_POST['main_form_submit'])) {
         $id = $_GET['id'];
         advertisement_class::sql_UPDATE($bd, $id, $post_date);
     } else { //иначе запись нового объявления в БД
-        advertisement_class::sql_INSERT($bd, $adv);
+        $adv->sql_INSERT($bd, $adv);
     }
     header("Location: $Location");
     exit;

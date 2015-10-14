@@ -34,7 +34,7 @@ class advertisement_class {
         $this->allow_mails = $post_date["allow_mails"];
     }
 
-    static public function sql_INSERT($bd, $adv) {
+    public function sql_INSERT($bd, $adv) {
         $object_array = get_object_vars($adv);
         $bd->query('INSERT INTO form(?#) VALUES(?a)', array_keys($object_array), array_values($object_array));
     }
