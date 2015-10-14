@@ -76,10 +76,9 @@ if (isset($_POST['main_form_submit'])) {
     $adv = new advertisement_class($post_date);
     if (isset($_GET['id'])) { //изменение объявления ID в БД
         $id = $_GET['id'];
-        sql_UPDATE($bd, $id, $post_date);
+        advertisement_class::sql_UPDATE($bd, $id, $post_date);
     } else { //иначе запись нового объявления в БД
-        //sql_INSERT($bd, $post_date);
-        $adv->sql_INSERT($bd, $adv);
+        advertisement_class::sql_INSERT($bd, $adv);
     }
     header("Location: $Location");
     exit;
@@ -91,7 +90,6 @@ if (isset($_POST['main_form_submit'])) {
 //варианты действий при получении данных в GET
 if (isset($_GET['id_del'])) { //удаление объявления id из БД с ID = $id_del
     $id_del = $_GET['id_del'];
-//    sql_DELETE($bd, $id_del);
     advertisement_class::sql_DELETE($bd, $id_del);
 }
 $Announcements = translation_table_form_in_array_objeckt_Announcements($bd); //подключение таблицы заполненных форм
