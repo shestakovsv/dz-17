@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.28, created on 2015-10-09 09:39:01
+<?php /* Smarty version 2.6.28, created on 2015-10-15 12:55:50
          compiled from index.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('modifier', 'default', 'index.tpl', 14, false),array('modifier', 'replace', 'index.tpl', 14, false),array('function', 'html_options', 'index.tpl', 34, false),)), $this); ?>
@@ -79,13 +79,13 @@ unset($_smarty_tpl_vars);
     foreach ($_from as $this->_tpl_vars['id'] => $this->_tpl_vars['value']):
 ?>      
         <a href="<?php echo $this->_tpl_vars['Location']; ?>
-?id=<?php echo $this->_tpl_vars['id']; ?>
+?id=<?php echo $this->_tpl_vars['value']->id; ?>
 " ><?php echo $this->_tpl_vars['value']->title; ?>
 </a>        
         |  Цена:   <?php echo $this->_tpl_vars['value']->price; ?>
     руб.  |  
         <a href="<?php echo $this->_tpl_vars['Location']; ?>
-?id_del=<?php echo $this->_tpl_vars['id']; ?>
+?id_del=<?php echo $this->_tpl_vars['value']->id; ?>
 " >Удалить</a> 
         <br>          
     <?php endforeach; endif; unset($_from); ?>

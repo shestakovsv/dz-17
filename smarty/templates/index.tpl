@@ -58,9 +58,9 @@
 
 {if (!empty($Announcements))}    
     {foreach from=$Announcements key=id item=value}      
-        <a href="{$Location}?id={$id}" >{$value->title}</a>        
+        <a href="{$Location}?id={$value->id}" >{$value->title}</a>        
         |  Цена:   {$value->price}    руб.  |  
-        <a href="{$Location}?id_del={$id}" >Удалить</a> 
+        <a href="{$Location}?id_del={$value->id}" >Удалить</a> 
         <br>          
     {/foreach}
 {/if}
