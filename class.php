@@ -6,7 +6,7 @@ header('Content-type: text/html; charset=utf-8');
 
 class advertisement_class {
 
-    public $id;
+//    public $id;
     public $private;
     public $manager;
     public $email;
@@ -20,7 +20,7 @@ class advertisement_class {
     public $allow_mails;
 
     function __construct($post_date) {
-        $this->id = $post_date["id"];
+//        $this->id = $post_date["id"];
         $this->private = $post_date["private"];
         $this->manager = $post_date["manager"];
         $this->email = $post_date["email"];
