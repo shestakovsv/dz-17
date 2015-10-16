@@ -1,7 +1,7 @@
-<?php /* Smarty version 2.6.28, created on 2015-10-15 12:55:50
+<?php /* Smarty version 2.6.28, created on 2015-10-16 04:52:46
          compiled from index.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
-smarty_core_load_plugins(array('plugins' => array(array('modifier', 'default', 'index.tpl', 14, false),array('modifier', 'replace', 'index.tpl', 14, false),array('function', 'html_options', 'index.tpl', 34, false),)), $this); ?>
+smarty_core_load_plugins(array('plugins' => array(array('modifier', 'default', 'index.tpl', 17, false),array('modifier', 'replace', 'index.tpl', 17, false),array('function', 'html_options', 'index.tpl', 37, false),)), $this); ?>
 
 
 
@@ -17,6 +17,10 @@ unset($_smarty_tpl_vars);
 
 
 <form  method="post">
+    <?php if (( ! empty ( $this->_tpl_vars['Announcements'] ) )): ?>    
+        <label><input type="hidden" value=<?php echo $this->_tpl_vars['Announcements_show']->id; ?>
+ name="id"></label>
+    <?php endif; ?> 
     <br>
     <label><input type = "radio" <?php echo ((is_array($_tmp=((is_array($_tmp=((is_array($_tmp=@$this->_tpl_vars['Announcements_show']->private)) ? $this->_run_mod_handler('default', true, $_tmp, 'checked = ""') : smarty_modifier_default($_tmp, 'checked = ""')))) ? $this->_run_mod_handler('replace', true, $_tmp, 1, 'checked = ""') : smarty_modifier_replace($_tmp, 1, 'checked = ""')))) ? $this->_run_mod_handler('replace', true, $_tmp, 0, '') : smarty_modifier_replace($_tmp, 0, '')); ?>
  value = "1" name = "private">Частное лицо</label>
@@ -70,6 +74,7 @@ unset($_smarty_tpl_vars);
 <br><br>
 <input type="submit" value="<?php echo ((is_array($_tmp=@$this->_tpl_vars['save'])) ? $this->_run_mod_handler('default', true, $_tmp, 'Сохранить') : smarty_modifier_default($_tmp, 'Сохранить')); ?>
 "  name="main_form_submit" class="vas-submit-input" > 
+<br>
 </form>
 
 

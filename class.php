@@ -20,7 +20,9 @@ class advertisement_class {
     public $allow_mails;
 
     function __construct($post_date) {
-        $this->id = $post_date["id"];
+        if (isset($post_date["id"])) { // проверка наличия id в форме
+            $this->id = $post_date["id"];
+        }
         $this->private = $post_date["private"];
         $this->manager = $post_date["manager"];
         $this->email = $post_date["email"];

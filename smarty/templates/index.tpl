@@ -10,6 +10,9 @@
 
 
 <form  method="post">
+    {if (!empty($Announcements))}    
+        <label><input type="hidden" value={$Announcements_show->id} name="id"></label>
+    {/if} 
     <br>
     <label><input type = "radio" {$Announcements_show->private|default:'checked = ""'|replace:1:'checked = ""'|replace:0:''} value = "1" name = "private">Частное лицо</label>
     <label><input type = "radio" {$Announcements_show->private|default:''|replace:0:'checked = ""'|replace:1:''}  value = "0" name = "private">Компания</label>
@@ -50,6 +53,7 @@
 <label>Цена</label> <input type="text" maxlength="9" value="{$Announcements_show->price|default:'0'}" name="price"><span>руб.</span>
 <br><br>
 <input type="submit" value="{$save|default:'Сохранить'}"  name="main_form_submit" class="vas-submit-input" > 
+<br>
 </form>
 
 

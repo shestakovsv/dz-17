@@ -98,7 +98,7 @@ $firePHP->table('Table Lable', $Announcements);
 if (isset($_GET['id'])) { // передача переменных в шаблон
     $id = $_GET['id'];
     if (isset($Announcements[$id])) {
-        $smarty->assign('Announcements_show', $Announcements[]);
+        $smarty->assign('Announcements_show', $Announcements[$id]);
         $smarty->assign('save', 'Сохранить изменения');
     }
 }
