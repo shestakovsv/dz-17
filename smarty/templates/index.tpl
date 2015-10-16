@@ -10,8 +10,8 @@
 
 
 <form  method="post">
-    {if (!empty($Announcements))}    
-        <label><input type="hidden" value={$Announcements_show->id} name="id"></label>
+    {if (!empty($Announcements_show))}    
+        <input type="hidden" value={$Announcements_show->id} name="id">
     {/if} 
     <br>
     <label><input type = "radio" {$Announcements_show->private|default:'checked = ""'|replace:1:'checked = ""'|replace:0:''} value = "1" name = "private">Частное лицо</label>
