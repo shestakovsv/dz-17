@@ -35,7 +35,7 @@ class advertisement_class {
         $this->price = $post_date["price"];
         $this->allow_mails = $post_date["allow_mails"];
 
-        $writer = addAdvertisement::instance();
+        $writer = repositoryAds::instance();
         $writer->addAdvertisement($this);
     }
 
@@ -79,6 +79,6 @@ class repositoryAds {
     }
 
     public function write() {
-       $this->$ads; 
+      return $this->$ads; 
     }
 }

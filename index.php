@@ -84,7 +84,7 @@ if (isset($_POST['main_form_submit'])) {
     exit;
 }
 
-$writer = addAdvertisement::instance();
+//$writer = addAdvertisement::instance();
 
 
 //варианты действий при получении данных в GET
