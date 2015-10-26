@@ -34,6 +34,9 @@ class advertisement_class {
         $this->description = $post_date["description"];
         $this->price = $post_date["price"];
         $this->allow_mails = $post_date["allow_mails"];
+
+        $writer = addAdvertisement::instance();
+        $writer->addAdvertisement($this);
     }
 
     public function sql_INSERT($bd, $adv) {
@@ -54,4 +57,28 @@ class advertisement_class {
         }
     }
 
+}
+
+class repositoryAds {
+
+    private static $instance = NULL;
+    private $ads = array();
+
+    public static function instance() {
+        if (self::$instance == NULL) {
+            self::$instance = new repositoryAds();
+        }
+        return self::$instance;
+    }
+
+    public function addAdvertisement(advertisement_class $advertisement_class) {
+        if(!($this instanceof repositoryAds)) {
+            die('нельзя использовать этот класс');
+        }
+        $this->$ads[] = $advertisement_class;
+    }
+
+    public function write() {
+       $this->$ads; 
+    }
 }

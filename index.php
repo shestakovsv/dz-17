@@ -84,7 +84,7 @@ if (isset($_POST['main_form_submit'])) {
     exit;
 }
 
-
+$writer = addAdvertisement::instance();
 
 
 //варианты действий при получении данных в GET
@@ -103,6 +103,8 @@ if (isset($_GET['id'])) { // передача переменных в шабло
     }
 }
 
+
+$repositoryAds->write;
 
 //подключение таблиц городов и категорий
 
