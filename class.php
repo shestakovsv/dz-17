@@ -35,7 +35,7 @@ class advertisement_class {
         $this->price = $post_date["price"];
         $this->allow_mails = $post_date["allow_mails"];
 
-        $writer = repositoryAds::instance();
+        $writer = repositoryAds::getinstance();
         $writer->addAdvertisement($this);
     }
 
@@ -57,6 +57,10 @@ class advertisement_class {
         }
     }
 
+    public function getId() {
+        return $this->id;
+    }
+
 }
 
 class repositoryAds {
@@ -64,7 +68,7 @@ class repositoryAds {
     private static $instance = NULL;
     private $ads = array();
 
-    public static function instance() {
+    public static function getinstance() {
         if (self::$instance == NULL) {
             self::$instance = new repositoryAds();
         }
@@ -72,13 +76,18 @@ class repositoryAds {
     }
 
     public function addAdvertisement(advertisement_class $advertisement_class) {
-        if(!($this instanceof repositoryAds)) {
+        if (!($this instanceof repositoryAds)) {
             die('нельзя использовать этот класс');
         }
-        $this->$ads[] = $advertisement_class;
+        $this->ads[] = $advertisement_class;
     }
 
-    public function write() {
-      return $this->$ads; 
+    public function repositoryAdsWriter() {
+        $str = '';
+        foreach ($this->ads as $advertisement_class) {
+            $str.=$advertisement_class->title."<br>";
+        }
+        echo $str;
     }
+
 }

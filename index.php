@@ -1,6 +1,7 @@
 
 <?php
-error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
+
+error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE | E_COMPILE_ERROR);
 ini_set('display_errors', 1);
 header('Content-type: text/html; charset=utf-8');
 
@@ -17,7 +18,7 @@ require_once ($project_root . "/FirePHPCore/FirePHP.class.php");
 $firePHP = FirePHP::getInstance(true);
 //Устанавливаем активность. Если выключить (false), то отладочные сообщения не будут
 //отображаться в FireBug
-$firePHP->setEnabled(false);
+$firePHP->setEnabled(true);
 
 require('smarty/libs/Smarty.class.php'); //Подключение библиотек смарти
 $smarty = new Smarty(); //создание объекта смарти
@@ -84,7 +85,7 @@ if (isset($_POST['main_form_submit'])) {
     exit;
 }
 
-//$writer = addAdvertisement::instance();
+
 
 
 //варианты действий при получении данных в GET
@@ -103,8 +104,9 @@ if (isset($_GET['id'])) { // передача переменных в шабло
     }
 }
 
-
-$repositoryAds->write;
+$writer = repositoryAds::getinstance();
+//$smarty->assign('writer', $writer);
+//$writer->repositoryAdsWriter();
 
 //подключение таблиц городов и категорий
 
