@@ -82,14 +82,13 @@ class repositoryAds {
         $this->ads[$advertisement_class->id] = $advertisement_class;
     }
 
-    public function repositoryAdsWriter() {
-        $this->ads;
+    public function repositoryGet() {
+        return ($this->ads);
+//        foreach ($this as $key => $value) {
+//            foreach ($value as $key => $value1) {
+//                var_dump($value1);
+//            }
+//        }
     }
-    
-    
-           
-    
-    
-    
 
 }

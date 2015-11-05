@@ -92,17 +92,22 @@ if (isset($_GET['id_del'])) { //удаление объявления id из Б
     $id_del = $_GET['id_del'];
     advertisement_class::sql_DELETE($bd, $id_del);
 }
-$Announcements = translation_table_form_in_array_objeckt_Announcements($bd); //подключение таблицы заполненных форм
-$firePHP->table('Table Lable', $Announcements);
+//$Announcements = translation_table_form_in_array_objeckt_Announcements($bd); //подключение таблицы заполненных форм
+//$firePHP->table('Table Lable', $Announcements);
+
+
+$writer = repositoryAds::getinstance();//подключение к хранилищу
+$AnnouncementsObgect = $writer->repositoryGet();//извлечение массива с объектами объявлений из хранилища
+
+
 
 if (isset($_GET['id'])) { // передача переменных в шаблон
     $id = $_GET['id'];
-    if (isset($Announcements[$id])) {
-        $smarty->assign('Announcements_show', $Announcements[$id]);
+    if (isset($AnnouncementsObgect[$id])) {
+        $smarty->assign('Announcements_show', $AnnouncementsObgect[$id]);
         $smarty->assign('save', 'Сохранить изменения');
     }
 }
-
 
 
 //подключение таблиц городов и категорий
@@ -113,7 +118,7 @@ $category = translation_table_category_in_array_category($bd);
 $smarty->assign('Location', basename($_SERVER['PHP_SELF']));
 $smarty->assign('location', $location);
 $smarty->assign('category', $category);
-$smarty->assign('Announcements', $Announcements);
+$smarty->assign('Announcements', $AnnouncementsObgect);
 //$smarty->assign('writer', $writer1);
 
 

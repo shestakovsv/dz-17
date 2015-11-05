@@ -1,6 +1,8 @@
 <?php
 
 //блок циклов считываение таблиц в массив объектов
+
+//функция не нужна
 function translation_table_form_in_array_objeckt_Announcements($bd) {
     $Announcements_massiv = $bd->select("select *,id AS ARRAY_KEY  from form");
     foreach ($Announcements_massiv as $key => $value) {
