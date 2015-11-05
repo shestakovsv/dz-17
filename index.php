@@ -1,6 +1,5 @@
 
 <?php
-
 error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE | E_COMPILE_ERROR);
 ini_set('display_errors', 1);
 header('Content-type: text/html; charset=utf-8');
@@ -104,9 +103,7 @@ if (isset($_GET['id'])) { // передача переменных в шабло
     }
 }
 
-$writer = repositoryAds::getinstance();
-//$smarty->assign('writer', $writer);
-//$writer->repositoryAdsWriter();
+
 
 //подключение таблиц городов и категорий
 
@@ -117,9 +114,11 @@ $smarty->assign('Location', basename($_SERVER['PHP_SELF']));
 $smarty->assign('location', $location);
 $smarty->assign('category', $category);
 $smarty->assign('Announcements', $Announcements);
+//$smarty->assign('writer', $writer1);
 
 
 $smarty->display('index.tpl');
+$smarty->display('table.tpl');
 
 
 

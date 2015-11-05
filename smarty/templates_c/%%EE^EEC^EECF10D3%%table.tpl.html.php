@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.28, created on 2015-11-01 14:08:54
+<?php /* Smarty version 2.6.28, created on 2015-11-02 09:04:48
          compiled from table.tpl.html */ ?>
 
 <h2 class="sub-header">Все объявления</h2>
@@ -14,11 +14,9 @@
                 </tr>
               </thead>
               <tbody>
-                 <!--<?php $_smarty_tpl_vars = $this->_tpl_vars;
-$this->_smarty_include(array('smarty_include_tpl_file' => 'table.tpl.html', 'smarty_include_vars' => array()));
-$this->_tpl_vars = $_smarty_tpl_vars;
-unset($_smarty_tpl_vars);
- ?>-->
+                  <?php echo '<?php'; ?>
+ include file='table_row.tpl' <?php echo '?>'; ?>
+
               
               </tbody>
             </table>

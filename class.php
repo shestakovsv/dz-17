@@ -79,15 +79,17 @@ class repositoryAds {
         if (!($this instanceof repositoryAds)) {
             die('нельзя использовать этот класс');
         }
-        $this->ads[] = $advertisement_class;
+        $this->ads[$advertisement_class->id] = $advertisement_class;
     }
 
     public function repositoryAdsWriter() {
-        $str = '';
-        foreach ($this->ads as $advertisement_class) {
-            $str.=$advertisement_class->title."<br>";
-        }
-        echo $str;
+        $this->ads;
     }
+    
+    
+           
+    
+    
+    
 
 }
