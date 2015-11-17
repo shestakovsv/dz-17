@@ -25,10 +25,14 @@
             <input type="hidden" value={$Announcements_show->id} name="id">
         {/if} 
         <br>
-        <label><input type = "radio" {$Announcements_show->private|default:'checked = ""'|replace:1:'checked = ""'|replace:0:''} value = "1" name = "private">Частное лицо</label>
-        <br>
-        <label><input type = "radio" {$Announcements_show->private|default:''|replace:0:'checked = ""'|replace:1:''}  value = "0" name = "private">Компания</label>
-        <br>
+        <div class="form-group">
+            <div class="col-sm-4">
+            </div>
+            <div class="col-sm-8">
+                <label><input type = "radio" {$Announcements_show->private|default:'checked = ""'|replace:1:'checked = ""'|replace:0:''} value = "1" name = "private">Частное лицо</label>
+                <label><input type = "radio" {$Announcements_show->private|default:''|replace:0:'checked = ""'|replace:1:''}  value = "0" name = "private">Компания</label>
+            </div>
+        </div>
         <div class="form-group">
             <label for="manager" class="col-sm-4 ">Контактное лицо</label>
             <div class="col-sm-8">

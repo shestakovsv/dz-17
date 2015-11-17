@@ -17,7 +17,7 @@ class advertisement_class {
     public $title;
     public $description;
     public $price;
-    public $allow_mails;
+    public $allow_mails = 0;
 
     function __construct($post_date) {
         if (isset($post_date["id"])) { // проверка наличия id в форме
@@ -35,8 +35,8 @@ class advertisement_class {
         $this->price = $post_date["price"];
         $this->allow_mails = $post_date["allow_mails"];
 
-        $writer = repositoryAds::getinstance();
-        $writer->addAdvertisement($this);
+        $repository = repositoryAds::getinstance();
+        $repository->addAdvertisement($this);
     }
 
     public function sql_INSERT($bd, $adv) {
@@ -51,22 +51,19 @@ class advertisement_class {
     public function sql_UPDATE($bd, $id, $adv) {
         $object_array = get_object_vars($adv);
         $bd->query('UPDATE form SET ?a WHERE id =?', $object_array, $id);
-        if (empty($object_array["allow_mails"])) {
-            $value = '';
-            $bd->query('UPDATE form SET allow_mails=? WHERE id =?', $value, $id);
-        }
     }
 
     public function getId() {
         return $this->id;
     }
 
+
 }
 
 class repositoryAds {
 
     private static $instance = NULL;
-    private $ads = array();
+    private $repository = array();
 
     public static function getinstance() {
         if (self::$instance == NULL) {
@@ -79,16 +76,20 @@ class repositoryAds {
         if (!($this instanceof repositoryAds)) {
             die('нельзя использовать этот класс');
         }
-        $this->ads[$advertisement_class->id] = $advertisement_class;
+        $this->repository[$advertisement_class->id] = $advertisement_class;
     }
 
     public function repositoryGet() {
-        return ($this->ads);
-//        foreach ($this as $key => $value) {
-//            foreach ($value as $key => $value1) {
-//                var_dump($value1);
-//            }
-//        }
+        return $this->repository;
     }
 
+}
+
+class advertisement_private_class extends advertisement_class {
+    
+}
+
+
+class advertisement_company_class extends advertisement_class {
+    
 }

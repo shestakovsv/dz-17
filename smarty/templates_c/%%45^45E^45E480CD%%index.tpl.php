@@ -1,7 +1,7 @@
-<?php /* Smarty version 2.6.28, created on 2015-11-05 07:48:41
+<?php /* Smarty version 2.6.28, created on 2015-11-16 02:47:17
          compiled from index.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
-smarty_core_load_plugins(array('plugins' => array(array('modifier', 'default', 'index.tpl', 28, false),array('modifier', 'replace', 'index.tpl', 28, false),array('function', 'html_options', 'index.tpl', 63, false),)), $this); ?>
+smarty_core_load_plugins(array('plugins' => array(array('modifier', 'default', 'index.tpl', 32, false),array('modifier', 'replace', 'index.tpl', 32, false),array('function', 'html_options', 'index.tpl', 67, false),)), $this); ?>
 
 
 
@@ -33,12 +33,16 @@ unset($_smarty_tpl_vars);
  name="id">
         <?php endif; ?> 
         <br>
-        <label><input type = "radio" <?php echo ((is_array($_tmp=((is_array($_tmp=((is_array($_tmp=@$this->_tpl_vars['Announcements_show']->private)) ? $this->_run_mod_handler('default', true, $_tmp, 'checked = ""') : smarty_modifier_default($_tmp, 'checked = ""')))) ? $this->_run_mod_handler('replace', true, $_tmp, 1, 'checked = ""') : smarty_modifier_replace($_tmp, 1, 'checked = ""')))) ? $this->_run_mod_handler('replace', true, $_tmp, 0, '') : smarty_modifier_replace($_tmp, 0, '')); ?>
+        <div class="form-group">
+            <div class="col-sm-4">
+            </div>
+            <div class="col-sm-8">
+                <label><input type = "radio" <?php echo ((is_array($_tmp=((is_array($_tmp=((is_array($_tmp=@$this->_tpl_vars['Announcements_show']->private)) ? $this->_run_mod_handler('default', true, $_tmp, 'checked = ""') : smarty_modifier_default($_tmp, 'checked = ""')))) ? $this->_run_mod_handler('replace', true, $_tmp, 1, 'checked = ""') : smarty_modifier_replace($_tmp, 1, 'checked = ""')))) ? $this->_run_mod_handler('replace', true, $_tmp, 0, '') : smarty_modifier_replace($_tmp, 0, '')); ?>
  value = "1" name = "private">Частное лицо</label>
-        <br>
-        <label><input type = "radio" <?php echo ((is_array($_tmp=((is_array($_tmp=((is_array($_tmp=@$this->_tpl_vars['Announcements_show']->private)) ? $this->_run_mod_handler('default', true, $_tmp, '') : smarty_modifier_default($_tmp, '')))) ? $this->_run_mod_handler('replace', true, $_tmp, 0, 'checked = ""') : smarty_modifier_replace($_tmp, 0, 'checked = ""')))) ? $this->_run_mod_handler('replace', true, $_tmp, 1, '') : smarty_modifier_replace($_tmp, 1, '')); ?>
+                <label><input type = "radio" <?php echo ((is_array($_tmp=((is_array($_tmp=((is_array($_tmp=@$this->_tpl_vars['Announcements_show']->private)) ? $this->_run_mod_handler('default', true, $_tmp, '') : smarty_modifier_default($_tmp, '')))) ? $this->_run_mod_handler('replace', true, $_tmp, 0, 'checked = ""') : smarty_modifier_replace($_tmp, 0, 'checked = ""')))) ? $this->_run_mod_handler('replace', true, $_tmp, 1, '') : smarty_modifier_replace($_tmp, 1, '')); ?>
   value = "0" name = "private">Компания</label>
-        <br>
+            </div>
+        </div>
         <div class="form-group">
             <label for="manager" class="col-sm-4 ">Контактное лицо</label>
             <div class="col-sm-8">

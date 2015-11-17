@@ -73,7 +73,11 @@ if (isset($_POST['main_form_submit'])) {
         $post_date["allow_mails"] = 0;
     }
     unset($post_date["main_form_submit"]);
-    $adv = new advertisement_class($post_date);
+    if ($post_date['private'] == 0) {
+            $adv = new advertisement_company_class($post_date);
+        } else {
+            $adv = new advertisement_private_class($post_date);
+        }
     if (isset($_GET['id'])) { //изменение объявления ID в БД
         $id = $_GET['id'];
         $adv->sql_UPDATE($bd, $id, $adv);
@@ -92,12 +96,15 @@ if (isset($_GET['id_del'])) { //удаление объявления id из Б
     $id_del = $_GET['id_del'];
     advertisement_class::sql_DELETE($bd, $id_del);
 }
-//$Announcements = translation_table_form_in_array_objeckt_Announcements($bd); //подключение таблицы заполненных форм
-//$firePHP->table('Table Lable', $Announcements);
+$Announcements = translation_table_form_in_array_objeckt_Announcements($bd); //подключение таблицы заполненных форм
 
 
-$writer = repositoryAds::getinstance();//подключение к хранилищу
-$AnnouncementsObgect = $writer->repositoryGet();//извлечение массива с объектами объявлений из хранилища
+
+$repository = repositoryAds::getinstance();//подключение к хранилищу
+$AnnouncementsObgect = $repository->repositoryGet();//извлечение массива с объектами объявлений из хранилища
+//var_dump($AnnouncementsObgect);
+//var_dump($writer);
+
 
 
 

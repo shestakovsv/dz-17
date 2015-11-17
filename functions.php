@@ -1,21 +1,15 @@
 <?php
 
 //блок циклов считываение таблиц в массив объектов
-
 //функция не нужна
 function translation_table_form_in_array_objeckt_Announcements($bd) {
     $Announcements_massiv = $bd->select("select *,id AS ARRAY_KEY  from form");
     foreach ($Announcements_massiv as $key => $value) {
-        $Announcements[$key] = new advertisement_class($value);
-//        $writer = repositoryAds::getinstance();
-//        $smarty->assign('writer', $writer);
-//        $writer->repositoryAdsWriter();
-        
-    }
-    if (!empty($Announcements)) {
-        return $Announcements;
-//        return $writer;
-        
+        if ($value['private'] == 0) {
+            $Announcements[$key] = new advertisement_company_class($value);
+        } else {
+            $Announcements[$key] = new advertisement_private_class($value);
+        }
     }
 }
 
