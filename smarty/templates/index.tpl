@@ -18,9 +18,8 @@
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 
-
-<body style="width:500px;padding: 30px;">
-    <form class="form-horizontal" method="POST" role="form">
+<body style="width:700px;padding:30px;margin:auto;" >
+    <form class="form-horizontal" method="POST" role="form" margin="auto">
         {if (!empty($Announcements_show))}    
             <input type="hidden" value={$Announcements_show->id} name="id">
         {/if} 
@@ -32,9 +31,9 @@
                 <label><input type = "radio" {$Announcements_show->private|default:'checked = ""'|replace:1:'checked = ""'|replace:0:''} value = "1" name = "private">Частное лицо</label>
                 <label><input type = "radio" {$Announcements_show->private|default:''|replace:0:'checked = ""'|replace:1:''}  value = "0" name = "private">Компания</label>
             </div>
-        </div>
+        </div>               
         <div class="form-group">
-            <label for="manager" class="col-sm-4 ">Контактное лицо</label>
+            <label for="manager" class="col-sm-4">Контактное лицо</label>
             <div class="col-sm-8">
                 <input type="text"  class="form-control" placeholder="Контактное лицо" maxlength="40" value="{$Announcements_show->manager|default:''}" name="manager">
             </div>
@@ -45,8 +44,17 @@
                 <input type="text" class="form-control" placeholder="Email" value="{$Announcements_show->email|default:''}" name="email">
             </div>
         </div>
-        <label  for="allow_mails"> <input type="checkbox" value="1" name="allow_mails" id="allow_mails" {$Announcements_show->allow_mails|default:''|replace:1:'checked = ""'} class="form-input-checkbox">
-            <span class="form-text-checkbox">Я не хочу получать вопросы по объявлению по e-mail</span> </label> <br>
+
+        <div class="form-group">
+            <div class="col-sm-4">
+            </div>
+            <div class="col-sm-8">   
+                <label  for="allow_mails"> <input type="checkbox" value="1" name="allow_mails" id="allow_mails" {$Announcements_show->allow_mails|default:''|replace:1:'checked = ""'} class="form-input-checkbox">
+                    <span class="form-text-checkbox">Я не хочу получать вопросы по объявлению по e-mail</span> </label> <br>
+            </div>
+        </div>
+
+
         <div class="form-group">
             <label for="seller_name" class="col-sm-4"><b>Ваше имя </b></label>
             <div class="col-md-8">
@@ -99,7 +107,10 @@
         <input type="submit" class="btn btn-default"  value="{$save|default:'Сохранить'}"  name="main_form_submit" class="vas-submit-input">
         <br>
     </form>
+
 </body>
+
+
 
 {*Announcements[48]->$title()*}
 {* Вывод объявлений в списке *}

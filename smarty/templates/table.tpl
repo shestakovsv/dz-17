@@ -1,7 +1,7 @@
 
 <h2 class="sub-header">Все объявления</h2>
 <div class="table-responsive">
-    <table class="table table table-hover">
+    <table class="table table table-hover" margin="auto" >
         <thead>
             <tr>
                 <th>#id</th>

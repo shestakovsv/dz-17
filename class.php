@@ -7,7 +7,6 @@ header('Content-type: text/html; charset=utf-8');
 class advertisement_class {
 
     public $id;
-    public $private;
     public $manager;
     public $email;
     public $seller_name;
@@ -23,7 +22,6 @@ class advertisement_class {
         if (isset($post_date["id"])) { // проверка наличия id в форме
             $this->id = $post_date["id"];
         }
-        $this->private = $post_date["private"];
         $this->manager = $post_date["manager"];
         $this->email = $post_date["email"];
         $this->seller_name = $post_date["seller_name"];
@@ -86,10 +84,10 @@ class repositoryAds {
 }
 
 class advertisement_private_class extends advertisement_class {
-    
+   public $private = 1; 
 }
 
 
 class advertisement_company_class extends advertisement_class {
-    
+    public $private = 0;
 }
