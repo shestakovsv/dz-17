@@ -4,7 +4,7 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 ini_set('display_errors', 1);
 header('Content-type: text/html; charset=utf-8');
 
-class advertisement_class {
+class Advertisement_class {
 
     public $id;
     public $manager;
@@ -33,7 +33,7 @@ class advertisement_class {
         $this->price = $post_date["price"];
         $this->allow_mails = $post_date["allow_mails"];
 
-        $repository = repositoryAds::getinstance();
+        $repository = RepositoryAds::getinstance();
         $repository->addAdvertisement($this);
     }
 
@@ -58,23 +58,23 @@ class advertisement_class {
 
 }
 
-class repositoryAds {
+class RepositoryAds {
 
     private static $instance = NULL;
     private $repository = array();
 
     public static function getinstance() {
         if (self::$instance == NULL) {
-            self::$instance = new repositoryAds();
+            self::$instance = new RepositoryAds();
         }
         return self::$instance;
     }
 
-    public function addAdvertisement(advertisement_class $advertisement_class) {
-        if (!($this instanceof repositoryAds)) {
+    public function addAdvertisement(Advertisement_class $Advertisement_class) {
+        if (!($this instanceof RepositoryAds)) {
             die('нельзя использовать этот класс');
         }
-        $this->repository[$advertisement_class->id] = $advertisement_class;
+        $this->repository[$Advertisement_class->id] = $Advertisement_class;
     }
 
     public function repositoryGet() {
@@ -83,11 +83,8 @@ class repositoryAds {
 
 }
 
-class advertisement_private_class extends advertisement_class {
-   public $private = 1; 
-}
 
 
-class advertisement_company_class extends advertisement_class {
-    public $private = 0;
-}
+
+
+

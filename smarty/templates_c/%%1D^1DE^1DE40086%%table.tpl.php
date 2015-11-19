@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.28, created on 2015-11-19 04:29:17
+<?php /* Smarty version 2.6.28, created on 2015-11-19 16:44:13
          compiled from table.tpl */ ?>
 
 <h2 class="sub-header">Все объявления</h2>
@@ -14,10 +14,16 @@
             </tr>
         </thead>
         <tbody>
-            <?php $_from = $this->_tpl_vars['Announcements']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }if (count($_from)):
+            <?php $_from = $this->_tpl_vars['announcements']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }if (count($_from)):
     foreach ($_from as $this->_tpl_vars['id'] => $this->_tpl_vars['value']):
-?> 
-                <tr><td><a href="<?php echo $this->_tpl_vars['Location']; ?>
+?>
+                <?php if (( $this->_tpl_vars['value']->private == 0 )): ?>    
+                    <tr class="success">
+                    <?php else: ?>
+                    <tr>      
+                    <?php endif; ?> 
+
+                    <td><a href="<?php echo $this->_tpl_vars['Location']; ?>
 ?id=<?php echo $this->_tpl_vars['value']->id; ?>
 "><?php echo $this->_tpl_vars['value']->id; ?>
 </a></td>

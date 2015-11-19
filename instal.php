@@ -3,9 +3,9 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 ini_set('display_errors', 1);
 header('Content-type: text/html; charset=utf-8');
 
-function User_serialize($User) {
-    $User_serialize = serialize($User);
-    if (!file_put_contents('./User.txt', $User_serialize)) {
+function User_serialize($user) {
+    $user_serialize = serialize($user);
+    if (!file_put_contents('./User.txt', $user_serialize)) {
         exit('Ошибка записи файла');
     }
 }
@@ -39,11 +39,11 @@ if (isset($_POST['instal'])) {
 
 
 
-    $User['server_name'] = $_POST['server_name'];
-    $User['user_name'] = $_POST['user_name'];
-    $User['password'] = $_POST['password'];
-    $User['database'] = $_POST['database'];
-    User_serialize($User);
+    $user['server_name'] = $_POST['server_name'];
+    $user['user_name'] = $_POST['user_name'];
+    $user['password'] = $_POST['password'];
+    $user['database'] = $_POST['database'];
+    User_serialize($user);
 
 
     echo 'подключение к базе данных ' . $_POST['database'] . ' успешно выполненно<br>';

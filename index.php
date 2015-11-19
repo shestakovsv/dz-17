@@ -33,7 +33,9 @@ $smarty->config_dir = $smarty_dir . 'configs';
 // определение функций
 include 'functions.php';
 //определение классов
-include 'class.php';
+include 'Adv.php';
+include 'AdvCompany.php';
+include 'AdvPrivate.php';
 
 
 // загрузка данных из фала server_name,user_name, password, database
@@ -41,7 +43,7 @@ $filename = './User.txt';
 if (file_exists($filename)) {
     $temp_str = file_get_contents('./User.txt');
     if (isset($temp_str)) {
-        $User = unserialize(file_get_contents('./User.txt')); // действие в случае удачи
+        $user = unserialize(file_get_contents('./User.txt')); // действие в случае удачи
     } else {
         ?><a href="instal.php">Проверьте введенные данные</a><?php
         exit('Ошибка чтения файла'); // или другое действие при неудачном чтении файла
@@ -53,7 +55,7 @@ if (file_exists($filename)) {
 
 
 //подключение к серверу SQL
-$bd = DbSimple_Generic::connect("mysqli://$User[user_name]:$User[password]@$User[server_name]/$User[database]");
+$bd = DbSimple_Generic::connect("mysqli://$user[user_name]:$user[password]@$user[server_name]/$user[database]");
 
 // Устанавливаем обработчик ошибок.
 $bd->setErrorHandler('databaseErrorHandler');
@@ -64,7 +66,7 @@ $bd->setLogger('myLogger');
 $bd->query('SET NAMES utf8'); //установка кодировки utf8
 
 
-$Location = basename($_SERVER['PHP_SELF']);
+$location = basename($_SERVER['PHP_SELF']);
 
 //добавленых объявления в массив
 if (isset($_POST['main_form_submit'])) {
@@ -74,17 +76,17 @@ if (isset($_POST['main_form_submit'])) {
     }
     unset($post_date["main_form_submit"]);
     if ($post_date['private'] == 0) {
-            $adv = new advertisement_company_class($post_date);
-        } else {
-            $adv = new advertisement_private_class($post_date);
-        }
+        $adv = new AdvertisementCompany($post_date);
+    } else {
+        $adv = new AdvertisementPrivate($post_date);
+    }
     if (isset($_GET['id'])) { //изменение объявления ID в БД
         $id = $_GET['id'];
         $adv->sql_UPDATE($bd, $id, $adv);
     } else { //иначе запись нового объявления в БД
         $adv->sql_INSERT($bd, $adv);
     }
-    header("Location: $Location");
+    header("Location: $location");
     exit;
 }
 
@@ -94,15 +96,24 @@ if (isset($_POST['main_form_submit'])) {
 //варианты действий при получении данных в GET
 if (isset($_GET['id_del'])) { //удаление объявления id из БД с ID = $id_del
     $id_del = $_GET['id_del'];
-    advertisement_class::sql_DELETE($bd, $id_del);
+    Advertisement_class::sql_DELETE($bd, $id_del);
 }
-$Announcements = translation_table_form_in_array_objeckt_Announcements($bd); //подключение таблицы заполненных форм
 
 
+//подключение таблицы заполненных форм
+$announcements_massiv = $bd->select("select *,id AS ARRAY_KEY  from form");
+foreach ($announcements_massiv as $key => $value) {
+    if ($value['private'] == 0) {
+        new AdvertisementCompany($value);
+    } else {
+        new AdvertisementPrivate($value);
+    }
+}
 
-$repository = repositoryAds::getinstance();//подключение к хранилищу
-$AnnouncementsObgect = $repository->repositoryGet();//извлечение массива с объектами объявлений из хранилища
-//var_dump($AnnouncementsObgect);
+
+$repository = RepositoryAds::getinstance(); //подключение к хранилищу
+$announcementsObgect = $repository->repositoryGet(); //извлечение массива с объектами объявлений из хранилища
+//var_dump($announcementsObgect);
 //var_dump($writer);
 
 
@@ -110,8 +121,8 @@ $AnnouncementsObgect = $repository->repositoryGet();//извлечение ма�
 
 if (isset($_GET['id'])) { // передача переменных в шаблон
     $id = $_GET['id'];
-    if (isset($AnnouncementsObgect[$id])) {
-        $smarty->assign('Announcements_show', $AnnouncementsObgect[$id]);
+    if (isset($announcementsObgect[$id])) {
+        $smarty->assign('announcements_show', $announcementsObgect[$id]);
         $smarty->assign('save', 'Сохранить изменения');
     }
 }
@@ -125,7 +136,7 @@ $category = translation_table_category_in_array_category($bd);
 $smarty->assign('Location', basename($_SERVER['PHP_SELF']));
 $smarty->assign('location', $location);
 $smarty->assign('category', $category);
-$smarty->assign('Announcements', $AnnouncementsObgect);
+$smarty->assign('announcements', $announcementsObgect);
 //$smarty->assign('writer', $writer1);
 
 

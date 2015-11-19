@@ -12,8 +12,14 @@
             </tr>
         </thead>
         <tbody>
-            {foreach from=$Announcements key=id item=value} 
-                <tr><td><a href="{$Location}?id={$value->id}">{$value->id}</a></td>
+            {foreach from=$announcements key=id item=value}
+                {if ($value->private == 0)}    
+                    <tr class="success">
+                    {else}
+                    <tr>      
+                    {/if} 
+
+                    <td><a href="{$Location}?id={$value->id}">{$value->id}</a></td>
                     <td><a href="{$Location}?id={$value->id}">{$value->title}</a></td>
                     <td>{$value->description}</td>
                     <td>{$value->price}    руб.</td>

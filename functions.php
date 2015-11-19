@@ -1,16 +1,16 @@
 <?php
 
 //блок циклов считываение таблиц в массив объектов
-function translation_table_form_in_array_objeckt_Announcements($bd) {
-    $Announcements_massiv = $bd->select("select *,id AS ARRAY_KEY  from form");
-    foreach ($Announcements_massiv as $key => $value) {
-        if ($value['private'] == 0) {
-            $Announcements[$key] = new advertisement_company_class($value);
-        } else {
-            $Announcements[$key] = new advertisement_private_class($value);
-        }
-    }
-}
+//function translation_table_form_in_array_objeckt_announcements($bd) {
+//    $announcements_massiv = $bd->select("select *,id AS ARRAY_KEY  from form");
+//    foreach ($announcements_massiv as $key => $value) {
+//        if ($value['private'] == 0) {
+//            $announcements[$key] = new AdvertisementCompany($value);
+//        } else {
+//            $announcements[$key] = new AdvertisementPrivate($value);
+//        }
+//    }
+//}
 
 function translation_table_sity_in_array_location($bd) {
     $location = $bd->selectCol('SELECT location AS ARRAY_KEY,location FROM sity');
