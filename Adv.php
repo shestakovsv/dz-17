@@ -33,8 +33,7 @@ class Advertisement_class {
         $this->price = $post_date["price"];
         $this->allow_mails = $post_date["allow_mails"];
 
-        $repository = RepositoryAds::getinstance();
-        $repository->addAdvertisement($this);
+
     }
 
     public function sql_INSERT($bd, $adv) {
@@ -53,6 +52,13 @@ class Advertisement_class {
 
     public function getId() {
         return $this->id;
+    }
+    
+    
+    
+    public function repository() {
+        $repository = RepositoryAds::getinstance();
+        $repository->addAdvertisement($this);
     }
 
 

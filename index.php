@@ -76,9 +76,13 @@ if (isset($_POST['main_form_submit'])) {
     }
     unset($post_date["main_form_submit"]);
     if ($post_date['private'] == 0) {
-        $adv = new AdvertisementCompany($post_date);
+//        $adv = new AdvertisementCompany($post_date);
+        $advertisementCompany = new AdvertisementCompany($post_date);
+        $advertisementCompany->repository();
     } else {
-        $adv = new AdvertisementPrivate($post_date);
+//        $adv = new AdvertisementPrivate($post_date);
+        $advertisementPrivatenew = new AdvertisementPrivate($value);
+        $advertisementPrivatenew->repository();
     }
     if (isset($_GET['id'])) { //изменение объявления ID в БД
         $id = $_GET['id'];
@@ -104,9 +108,11 @@ if (isset($_GET['id_del'])) { //удаление объявления id из Б
 $announcements_massiv = $bd->select("select *,id AS ARRAY_KEY  from form");
 foreach ($announcements_massiv as $key => $value) {
     if ($value['private'] == 0) {
-        new AdvertisementCompany($value);
+        $advertisementCompany = new AdvertisementCompany($value);
+        $advertisementCompany->repository();
     } else {
-        new AdvertisementPrivate($value);
+        $advertisementPrivatenew = new AdvertisementPrivate($value);
+        $advertisementPrivatenew->repository();
     }
 }
 
