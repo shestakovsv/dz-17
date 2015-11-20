@@ -77,12 +77,12 @@ if (isset($_POST['main_form_submit'])) {
     unset($post_date["main_form_submit"]);
     if ($post_date['private'] == 0) {
 //        $adv = new AdvertisementCompany($post_date);
-        $advertisementCompany = new AdvertisementCompany($post_date);
-        $advertisementCompany->repository();
+        $adv = new AdvertisementCompany($post_date);
+        $adv->repository();
     } else {
 //        $adv = new AdvertisementPrivate($post_date);
-        $advertisementPrivatenew = new AdvertisementPrivate($value);
-        $advertisementPrivatenew->repository();
+        $adv = new AdvertisementPrivate($post_date);
+        $adv->repository();
     }
     if (isset($_GET['id'])) { //изменение объявления ID в БД
         $id = $_GET['id'];
