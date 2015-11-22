@@ -33,9 +33,12 @@ $smarty->config_dir = $smarty_dir . 'configs';
 // определение функций
 include 'functions.php';
 //определение классов
-include 'Adv.php';
+include 'RepositoryAds.php';
+include 'Advertisement.php';
 include 'AdvCompany.php';
 include 'AdvPrivate.php';
+include 'AdvertisementFactory.php';
+
 
 
 // загрузка данных из фала server_name,user_name, password, database
@@ -75,21 +78,7 @@ if (isset($_POST['main_form_submit'])) {
         $post_date["allow_mails"] = 0;
     }
     unset($post_date["main_form_submit"]);
-    if ($post_date['private'] == 0) {
-//        $adv = new AdvertisementCompany($post_date);
-        $adv = new AdvertisementCompany($post_date);
-        $adv->repository();
-    } else {
-//        $adv = new AdvertisementPrivate($post_date);
-        $adv = new AdvertisementPrivate($post_date);
-        $adv->repository();
-    }
-    if (isset($_GET['id'])) { //изменение объявления ID в БД
-        $id = $_GET['id'];
-        $adv->sql_UPDATE($bd, $id, $adv);
-    } else { //иначе запись нового объявления в БД
-        $adv->sql_INSERT($bd, $adv);
-    }
+    addObject($post_date, $bd);
     header("Location: $location");
     exit;
 }
@@ -100,20 +89,14 @@ if (isset($_POST['main_form_submit'])) {
 //варианты действий при получении данных в GET
 if (isset($_GET['id_del'])) { //удаление объявления id из БД с ID = $id_del
     $id_del = $_GET['id_del'];
-    Advertisement_class::sql_DELETE($bd, $id_del);
+    Advertisement::sql_DELETE($bd, $id_del);
 }
 
 
 //подключение таблицы заполненных форм
 $announcements_massiv = $bd->select("select *,id AS ARRAY_KEY  from form");
 foreach ($announcements_massiv as $key => $value) {
-    if ($value['private'] == 0) {
-        $advertisementCompany = new AdvertisementCompany($value);
-        $advertisementCompany->repository();
-    } else {
-        $advertisementPrivatenew = new AdvertisementPrivate($value);
-        $advertisementPrivatenew->repository();
-    }
+    addObject($value, $bd);
 }
 
 
@@ -143,7 +126,6 @@ $smarty->assign('Location', basename($_SERVER['PHP_SELF']));
 $smarty->assign('location', $location);
 $smarty->assign('category', $category);
 $smarty->assign('announcements', $announcementsObgect);
-//$smarty->assign('writer', $writer1);
 
 
 $smarty->display('index.tpl');

@@ -1,8 +1,17 @@
 <?php
 
+function addObject($post_date, $bd) {
+    if ($post_date['private'] == 0) {
+        $adv = AdvertisementFactory::build("AdvertisementCompany", $post_date);
+        $adv->repository();
+    } else {
+        $adv = AdvertisementFactory::build("AdvertisementPrivate", $post_date);
+        $adv->repository();
+    }
+     $adv->save($bd, $adv);
+}
+
 //блок циклов считываение таблиц в массив объектов
-
-
 function translation_table_sity_in_array_location($bd) {
     $location = $bd->selectCol('SELECT location AS ARRAY_KEY,location FROM sity');
     return $location;
@@ -26,10 +35,10 @@ function myLogger($db, $sql, $caller) {
 
 // Код обработчика ошибок SQL.
 function databaseErrorHandler($message, $info) {
-    // Если использовалась @, ничего не делать.
+// Если использовалась @, ничего не делать.
     if (!error_reporting())
         return;
-    // Выводим подробную информацию об ошибке.
+// Выводим подробную информацию об ошибке.
     echo "SQL Error: $message<br><pre>";
     print_r($info);
     echo "</pre>";

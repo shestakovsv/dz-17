@@ -1,10 +1,7 @@
 <?php
 
-error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
-ini_set('display_errors', 1);
-header('Content-type: text/html; charset=utf-8');
-
-class Advertisement_class {
+//class Advertisement {
+abstract class Advertisement {
 
     public $id;
     public $manager;
@@ -32,8 +29,6 @@ class Advertisement_class {
         $this->description = $post_date["description"];
         $this->price = $post_date["price"];
         $this->allow_mails = $post_date["allow_mails"];
-
-
     }
 
     public function sql_INSERT($bd, $adv) {
@@ -45,52 +40,29 @@ class Advertisement_class {
         $bd->select('DELETE FROM form WHERE id = ?', $id_del);
     }
 
-    public function sql_UPDATE($bd, $id, $adv) {
+    public function sql_UPDATE($bd, $adv) {
         $object_array = get_object_vars($adv);
+        $id = $object_array["id"];
         $bd->query('UPDATE form SET ?a WHERE id =?', $object_array, $id);
     }
 
     public function getId() {
         return $this->id;
     }
-    
-    
-    
+
     public function repository() {
         $repository = RepositoryAds::getinstance();
         $repository->addAdvertisement($this);
     }
 
-
-}
-
-class RepositoryAds {
-
-    private static $instance = NULL;
-    private $repository = array();
-
-    public static function getinstance() {
-        if (self::$instance == NULL) {
-            self::$instance = new RepositoryAds();
+    public function save($bd, $adv) {
+        if (isset($this->id)) {
+            $this->sql_UPDATE($bd, $adv);
+        } else {
+            $this->sql_INSERT($bd, $adv);
         }
-        return self::$instance;
-    }
-
-    public function addAdvertisement(Advertisement_class $Advertisement_class) {
-        if (!($this instanceof RepositoryAds)) {
-            die('нельзя использовать этот класс');
-        }
-        $this->repository[$Advertisement_class->id] = $Advertisement_class;
-    }
-
-    public function repositoryGet() {
-        return $this->repository;
     }
 
 }
-
-
-
-
 
 
