@@ -37,10 +37,7 @@ include 'RepositoryAds.php';
 include 'Advertisement.php';
 include 'AdvCompany.php';
 include 'AdvPrivate.php';
-include 'AdvertisementFactory.php';
-
-
-
+//include 'AdvertisementFactory.php';
 // загрузка данных из фала server_name,user_name, password, database
 $filename = './User.txt';
 if (file_exists($filename)) {
@@ -73,12 +70,17 @@ $location = basename($_SERVER['PHP_SELF']);
 
 //добавленых объявления в массив
 if (isset($_POST['main_form_submit'])) {
-    $post_date = $_POST;
-    if (empty($post_date["allow_mails"])) {
-        $post_date["allow_mails"] = 0;
+    $postDate = $_POST;
+    if (empty($postDate["allow_mails"])) {
+        $postDate["allow_mails"] = 0;
     }
-    unset($post_date["main_form_submit"]);
-    addObject($post_date, $bd);
+    unset($postDate["main_form_submit"]);
+    if ($postDate['private'] == 0) {
+        $adv = new AdvertisementCompany($postDate);
+    } else {
+        $adv = new AdvertisementPrivate($postDate);
+    }
+    $adv->save($bd, $adv);
     header("Location: $location");
     exit;
 }
@@ -94,16 +96,11 @@ if (isset($_GET['id_del'])) { //удаление объявления id из Б
 
 
 //подключение таблицы заполненных форм
-$announcements_massiv = $bd->select("select *,id AS ARRAY_KEY  from form");
-foreach ($announcements_massiv as $key => $value) {
-    addObject($value, $bd);
-}
+objectCreation($bd);
 
 
 $repository = RepositoryAds::getinstance(); //подключение к хранилищу
 $announcementsObgect = $repository->repositoryGet(); //извлечение массива с объектами объявлений из хранилища
-//var_dump($announcementsObgect);
-//var_dump($writer);
 
 
 

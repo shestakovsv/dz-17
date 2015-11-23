@@ -1,6 +1,7 @@
 <?php
 
-//class Advertisement {
+//include 'RepositoryAds.php';
+
 abstract class Advertisement {
 
     public $id;
@@ -15,20 +16,23 @@ abstract class Advertisement {
     public $price;
     public $allow_mails = 0;
 
-    function __construct($post_date) {
-        if (isset($post_date["id"])) { // проверка наличия id в форме
-            $this->id = $post_date["id"];
+    function __construct($postDate) {
+        if (isset($postDate["id"])) { // проверка наличия id в форме
+            $this->id = $postDate["id"];
         }
-        $this->manager = $post_date["manager"];
-        $this->email = $post_date["email"];
-        $this->seller_name = $post_date["seller_name"];
-        $this->phone = $post_date["phone"];
-        $this->location_id = $post_date["location_id"];
-        $this->category_id = $post_date["category_id"];
-        $this->title = $post_date["title"];
-        $this->description = $post_date["description"];
-        $this->price = $post_date["price"];
-        $this->allow_mails = $post_date["allow_mails"];
+        $this->manager = $postDate["manager"];
+        $this->email = $postDate["email"];
+        $this->seller_name = $postDate["seller_name"];
+        $this->phone = $postDate["phone"];
+        $this->location_id = $postDate["location_id"];
+        $this->category_id = $postDate["category_id"];
+        $this->title = $postDate["title"];
+        $this->description = $postDate["description"];
+        $this->price = $postDate["price"];
+        $this->allow_mails = $postDate["allow_mails"];
+
+        $repository = repositoryAds::getinstance();
+        $repository->addAdvertisement($this);
     }
 
     public function sql_INSERT($bd, $adv) {
@@ -64,5 +68,3 @@ abstract class Advertisement {
     }
 
 }
-
-

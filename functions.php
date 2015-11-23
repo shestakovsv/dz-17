@@ -1,15 +1,26 @@
 <?php
 
-function addObject($post_date, $bd) {
-    if ($post_date['private'] == 0) {
-        $adv = AdvertisementFactory::build("AdvertisementCompany", $post_date);
-        $adv->repository();
-    } else {
-        $adv = AdvertisementFactory::build("AdvertisementPrivate", $post_date);
-        $adv->repository();
+function objectCreation($bd) {
+    $announcements_massiv = $bd->select("select *,id AS ARRAY_KEY  from form");
+    foreach ($announcements_massiv as $key => $value) {
+        if ($value['private'] == 0) {
+            new AdvertisementCompany($value);
+        } else {
+            new AdvertisementPrivate($value);
+        }
     }
-     $adv->save($bd, $adv);
 }
+
+//function addObject($postDate, $bd) {
+//    if ($postDate['private'] == 0) {
+//        $adv = AdvertisementFactory::build("AdvertisementCompany", $postDate);
+//        $adv->repository();
+//    } else {
+//        $adv = AdvertisementFactory::build("AdvertisementPrivate", $postDate);
+//        $adv->repository();
+//    }
+//    $adv->save($bd, $adv);
+//}
 
 //блок циклов считываение таблиц в массив объектов
 function translation_table_sity_in_array_location($bd) {
