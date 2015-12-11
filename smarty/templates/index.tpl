@@ -4,7 +4,7 @@
 
 {include file='header.tpl'}
 
-
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 
 <br>
 
@@ -16,7 +16,7 @@
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-
+<script src="del.js"></script>
 
 <body style="width:700px;padding:30px;margin:auto;" >
     <form class="form-horizontal" method="POST" role="form" margin="auto">

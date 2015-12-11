@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.28, created on 2015-11-19 16:01:21
+<?php /* Smarty version 2.6.28, created on 2015-12-11 15:58:13
          compiled from index.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('modifier', 'default', 'index.tpl', 31, false),array('modifier', 'replace', 'index.tpl', 31, false),array('function', 'html_options', 'index.tpl', 75, false),)), $this); ?>
@@ -11,7 +11,7 @@ $this->_tpl_vars = $_smarty_tpl_vars;
 unset($_smarty_tpl_vars);
  ?>
 
-
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 
 <br>
 
@@ -23,7 +23,7 @@ unset($_smarty_tpl_vars);
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-
+<script src="del.js"></script>
 
 <body style="width:700px;padding:30px;margin:auto;" >
     <form class="form-horizontal" method="POST" role="form" margin="auto">

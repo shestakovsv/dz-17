@@ -1,9 +1,13 @@
-<?php /* Smarty version 2.6.28, created on 2015-11-19 16:44:13
+<?php /* Smarty version 2.6.28, created on 2015-12-11 15:58:13
          compiled from table.tpl */ ?>
 
 <h2 class="sub-header">Все объявления</h2>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+
 <div class="table-responsive">
     <table class="table table table-hover" margin="auto" >
+
         <thead>
             <tr>
                 <th>#id</th>
@@ -22,11 +26,8 @@
                     <?php else: ?>
                     <tr>      
                     <?php endif; ?> 
-
-                    <td><a href="<?php echo $this->_tpl_vars['Location']; ?>
-?id=<?php echo $this->_tpl_vars['value']->id; ?>
-"><?php echo $this->_tpl_vars['value']->id; ?>
-</a></td>
+                    <td><?php echo $this->_tpl_vars['value']->id; ?>
+</td>
                     <td><a href="<?php echo $this->_tpl_vars['Location']; ?>
 ?id=<?php echo $this->_tpl_vars['value']->id; ?>
 "><?php echo $this->_tpl_vars['value']->title; ?>
@@ -35,11 +36,9 @@
 </td>
                     <td><?php echo $this->_tpl_vars['value']->price; ?>
     руб.</td>
-                    <td><a href="<?php echo $this->_tpl_vars['Location']; ?>
-?id_del=<?php echo $this->_tpl_vars['value']->id; ?>
-" >Удалить</a></td>
-                </tr>          
+                    <td><button type="button" class="btn btn-default">Удалить</button></td>
+                                    </tr>          
             <?php endforeach; endif; unset($_from); ?>
         </tbody>
     </table>
-</div>
+</div>
