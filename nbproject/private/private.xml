@@ -3,13 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/VagrantRoot/webroot/public_html/AdvPrivate.php</file>
             <file>file:/C:/VagrantRoot/webroot/public_html/functions.php</file>
+            <file>file:/C:/VagrantRoot/webroot/public_html/Advertisement.php</file>
             <file>file:/C:/VagrantRoot/webroot/public_html/del.js</file>
             <file>file:/C:/VagrantRoot/webroot/public_html/smarty/templates/index.tpl</file>
             <file>file:/C:/VagrantRoot/webroot/public_html/smarty/templates/table.tpl</file>
-            <file>file:/C:/VagrantRoot/webroot/public_html/instal.php</file>
-            <file>file:/C:/VagrantRoot/webroot/public_html/AdvCompany.php</file>
+            <file>file:/C:/VagrantRoot/webroot/public_html/ajax.php</file>
+            <file>file:/C:/VagrantRoot/webroot/public_html/config.php</file>
             <file>file:/C:/VagrantRoot/webroot/public_html/index.php</file>
         </group>
     </open-files>
