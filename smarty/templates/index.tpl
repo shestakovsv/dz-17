@@ -16,7 +16,12 @@
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+
 <script src="del.js"></script>
+<div id="container"></div>
+
+
 
 <body style="width:700px;padding:30px;margin:auto;" >
     <form class="form-horizontal" method="POST" role="form" margin="auto">

@@ -42,12 +42,6 @@ abstract class Advertisement {
 
     static public function sql_DELETE($bd, $id_del) {
         $bd->select('DELETE FROM form WHERE id = ?', $id_del);
-        ?>
-        <script>
-            $(table tbody td#del)
-            
-        </script>
-        <?
     }
 
     public function sql_UPDATE($bd, $adv) {
