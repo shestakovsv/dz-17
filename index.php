@@ -4,39 +4,40 @@
 include 'config.php';
 
 //добавленых объявления в массив
-if (isset($_POST['main_form_submit'])) {
-    $postDate = $_POST;
-    if (empty($postDate["allow_mails"])) {
-        $postDate["allow_mails"] = 0;
-    }
-    unset($postDate["main_form_submit"]);
-    if ($postDate['private'] == 0) {
-        $adv = new AdvertisementCompany($postDate);
-    } else {
-        $adv = new AdvertisementPrivate($postDate);
-    }
-    $adv->save($bd, $adv);
-    header("Location: $location");
-    exit;
-}
-
-
+//if (isset($_POST['main_form_submit'])) {
+//    $postDate = $_POST;
+//    if (empty($postDate["allow_mails"])) {
+//        $postDate["allow_mails"] = 0;
+//    }
+//    unset($postDate["main_form_submit"]);
+//    if ($postDate['private'] == 0) {
+//        $adv = new AdvertisementCompany($postDate);
+//    } else {
+//        $adv = new AdvertisementPrivate($postDate);
+//    }
+//    $adv->save($bd, $adv);
+//    header("Location: $location");
+//    exit;
+//}
 
 
 //варианты действий при получении данных в GET
 if (isset($_GET['id_del'])) { //удаление объявления id из БД с ID = $id_del
     $id_del = $_GET['id_del'];
     Advertisement::sql_DELETE($bd, $id_del);
+    exit;
 }
 
 
 //подключение таблицы заполненных форм
 objectCreation($bd);
 
-
 $repository = RepositoryAds::getinstance(); //подключение к хранилищу
 $announcementsObgect = $repository->repositoryGet(); //извлечение массива с объектами объявлений из хранилища
-
+//var_dump($announcementsObgect);
+//echo $announcementsObgect;
+//var_dump($repository);
+//if ($announcementsObgect)
 
 
 
@@ -59,7 +60,17 @@ $smarty->assign('location', $location);
 $smarty->assign('category', $category);
 $smarty->assign('announcements', $announcementsObgect);
 
-$smarty->display('table.tpl');
+
+
+if (!empty($announcementsObgect)) {
+    $smarty->display('table.tpl');
+} else {
+    ?>
+    <script src="alert.js"></script>
+    <?
+
+}
+//$smarty->display('table.tpl');
 $smarty->display('index.tpl');
 
 
