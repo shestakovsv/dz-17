@@ -23,8 +23,11 @@
 <div id="container"></div>
 
 
+{* Добавляем немного прогноза погоды с сервера погоды *}
+{*{fetch file='http://www.myweather.com/68502/'}*}
 
-<body style="width:700px;padding:30px;margin:auto;" >
+
+<body style="width:700px;padding:30px;margin:auto;">
     <form class="form-horizontal" method="POST" role="form" margin="auto">
         {if (!empty($announcements_show))}    
             <input type="hidden" value={$announcements_show->id} name="id">
@@ -110,7 +113,9 @@
                 <br><br>
             </div>
         </div>
-        <input type="submit" class="btn btn-default"  value="{$save|default:'Сохранить'}"  name="main_form_submit" class="vas-submit-input">
+{*        <input type="submit" class="btn btn-default"  value="{$save|default:'Сохранить'}"  name="main_form_submit" class="vas-submit-input">*}
+        <input type="button" class="btn btn-default"  value="{$save|default:'Сохранить'}"  name="main_form_submit" class="vas-submit-input">
+{*        <td><button type="button" class="btn btn-default">Удалить</button></td>*}
         <br>
     </form>
 

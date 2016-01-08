@@ -42,14 +42,6 @@ abstract class Advertisement {
 
     static public function sql_DELETE($bd, $id_del) {
         $bd->select('DELETE FROM form WHERE id = ?', $id_del);
-        if (!$bd->select('SELECT * FROM form')) {
-            ?>
-            <script src="alert.js"></script>
-            <?
-        }
-        ?>
-        <!--<script src="alert.js"></script>-->
-        <?
     }
 
     public function sql_UPDATE($bd, $adv) {

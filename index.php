@@ -3,28 +3,38 @@
 
 include 'config.php';
 
-//добавленых объявления в массив
-//if (isset($_POST['main_form_submit'])) {
-//    $postDate = $_POST;
-//    if (empty($postDate["allow_mails"])) {
-//        $postDate["allow_mails"] = 0;
-//    }
-//    unset($postDate["main_form_submit"]);
-//    if ($postDate['private'] == 0) {
-//        $adv = new AdvertisementCompany($postDate);
-//    } else {
-//        $adv = new AdvertisementPrivate($postDate);
-//    }
-//    $adv->save($bd, $adv);
-//    header("Location: $location");
+//if (!$_POST == NULL) {
+//    print_r($_POST);
+//    var_dump($_POST);
 //    exit;
 //}
+
+
+//добавленых объявления в массив
+if (!$_POST == NULL) {
+    $postDate = ($_POST);
+    
+    if (empty($postDate["allow_mails"])) {
+        $postDate["allow_mails"] = 0;
+    }
+//        unset($postDate["main_form_submit"]);
+    if ($postDate['private'] == 0) {
+        $adv = new AdvertisementCompany($postDate);
+    } else {
+        $adv = new AdvertisementPrivate($postDate);
+    }
+    $adv->save($bd, $adv);
+    header("Location: $location");
+    echo json_encode(['msg' => 'ok']);
+    exit;
+}
 
 
 //варианты действий при получении данных в GET
 if (isset($_GET['id_del'])) { //удаление объявления id из БД с ID = $id_del
     $id_del = $_GET['id_del'];
     Advertisement::sql_DELETE($bd, $id_del);
+    echo json_encode(['msg' => 'ok']);
     exit;
 }
 
@@ -71,10 +81,14 @@ if (!empty($announcementsObgect)) {
 
 }
 //$smarty->display('table.tpl');
-$smarty->display('index.tpl');
+//$smarty->display('index.tpl');
 
 
+$output = $smarty->fetch("index.tpl");
 
+// здесь выполняем какие-либо действия с $output
+
+echo $output;
 
 
 

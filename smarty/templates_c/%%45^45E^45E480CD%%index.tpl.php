@@ -1,7 +1,7 @@
-<?php /* Smarty version 2.6.28, created on 2015-12-23 05:40:40
+<?php /* Smarty version 2.6.28, created on 2015-12-29 14:25:59
          compiled from index.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
-smarty_core_load_plugins(array('plugins' => array(array('modifier', 'default', 'index.tpl', 37, false),array('modifier', 'replace', 'index.tpl', 37, false),array('function', 'html_options', 'index.tpl', 81, false),)), $this); ?>
+smarty_core_load_plugins(array('plugins' => array(array('modifier', 'default', 'index.tpl', 40, false),array('modifier', 'replace', 'index.tpl', 40, false),array('function', 'html_options', 'index.tpl', 84, false),)), $this); ?>
 
 
 
@@ -31,7 +31,8 @@ unset($_smarty_tpl_vars);
 
 
 
-<body style="width:700px;padding:30px;margin:auto;" >
+
+<body style="width:700px;padding:30px;margin:auto;">
     <form class="form-horizontal" method="POST" role="form" margin="auto">
         <?php if (( ! empty ( $this->_tpl_vars['announcements_show'] ) )): ?>    
             <input type="hidden" value=<?php echo $this->_tpl_vars['announcements_show']->id; ?>
@@ -130,7 +131,7 @@ unset($_smarty_tpl_vars);
                 <br><br>
             </div>
         </div>
-        <input type="submit" class="btn btn-default"  value="<?php echo ((is_array($_tmp=@$this->_tpl_vars['save'])) ? $this->_run_mod_handler('default', true, $_tmp, 'Сохранить') : smarty_modifier_default($_tmp, 'Сохранить')); ?>
+        <input type="button" class="btn btn-default"  value="<?php echo ((is_array($_tmp=@$this->_tpl_vars['save'])) ? $this->_run_mod_handler('default', true, $_tmp, 'Сохранить') : smarty_modifier_default($_tmp, 'Сохранить')); ?>
 "  name="main_form_submit" class="vas-submit-input">
         <br>
     </form>
