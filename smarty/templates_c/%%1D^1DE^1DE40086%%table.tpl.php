@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.28, created on 2015-12-11 15:58:13
+<?php /* Smarty version 2.6.28, created on 2016-01-10 11:05:58
          compiled from table.tpl */ ?>
 
 <h2 class="sub-header">Все объявления</h2>
@@ -6,7 +6,7 @@
 
 
 <div class="table-responsive">
-    <table class="table table table-hover" margin="auto" >
+    <table class="table table table-hover" margin="auto" id="myTable" >
 
         <thead>
             <tr>

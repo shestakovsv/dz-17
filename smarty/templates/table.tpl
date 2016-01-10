@@ -7,7 +7,7 @@
 
 
 <div class="table-responsive">
-    <table class="table table table-hover" margin="auto" >
+    <table class="table table table-hover" margin="auto" id="myTable" >
 
         <thead>
             <tr>

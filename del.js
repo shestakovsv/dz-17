@@ -17,29 +17,19 @@ $(document).ready(function () {
     $('input.btn').on('click', function () {
         var params = $('form.form-horizontal').serialize();
         console.log(params);
-        $.post("index.php", params, function () {
-            alert('передано');
+        $.post('index.php', params, function () {
+            alert('Ваше объявление успешно добавлено');
         });
+        $('form.form-horizontal').trigger('reset');
     });
-//    $('button.btn').on('click', function () {
-//        alert('success');
-//        var param = $('table').serialize();
-//        $.post("index.php", param, function (data) {
-//            console.log(data);
-//            console.log(param);
-//        });
-//
-//    });
-//    $('input.btn').on('click', function (e) {
-//        alert('success');
-//       var params = 
-//           $('form')
-//       ;
-//        $.post("index.php",params,function(data){
-//            console.log(data);
-//        });
-//        //console.log("pos");
-//
-//    });
+
+
+    if (!$('tr').length) {
+        alert("Активных объявлений нет!");
+    }
+    ;
+
+
+
 });
 

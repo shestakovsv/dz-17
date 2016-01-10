@@ -8,12 +8,10 @@ include 'config.php';
 //    var_dump($_POST);
 //    exit;
 //}
-
-
 //добавленых объявления в массив
 if (!$_POST == NULL) {
     $postDate = ($_POST);
-    
+
     if (empty($postDate["allow_mails"])) {
         $postDate["allow_mails"] = 0;
     }
@@ -74,12 +72,8 @@ $smarty->assign('announcements', $announcementsObgect);
 
 if (!empty($announcementsObgect)) {
     $smarty->display('table.tpl');
-} else {
-    ?>
-    <script src="alert.js"></script>
-    <?
-
 }
+
 //$smarty->display('table.tpl');
 //$smarty->display('index.tpl');
 
