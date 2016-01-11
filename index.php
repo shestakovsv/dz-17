@@ -22,9 +22,12 @@ if (!$_POST == NULL) {
         $adv = new AdvertisementPrivate($postDate);
     }
     $adv->save($bd, $adv);
-    header("Location: $location");
-    echo json_encode(['msg' => 'ok']);
-    exit;
+    
+    
+    $smarty->assign('announcements_tr', $adv);
+    $output1 = $smarty->fetch("tr.tpl");
+    echo $output1;
+//    $smarty->display('tr.tpl');
 }
 
 

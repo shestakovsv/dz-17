@@ -16,9 +16,11 @@ $(document).ready(function () {
 
     $('input.btn').on('click', function () {
         var params = $('form.form-horizontal').serialize();
-        console.log(params);
-        $.post('index.php', params, function () {
-            alert('Ваше объявление успешно добавлено');
+//        console.log(params);
+        $.post('index.php', params, function (data) {
+//            alert('Ваше объявление успешно добавлено' + data);
+//            console.log(data);
+            $('tbody').append(data);
         });
         $('form.form-horizontal').trigger('reset');
     });
