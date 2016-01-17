@@ -22,8 +22,9 @@ if (!$_POST == NULL) {
         $adv = new AdvertisementPrivate($postDate);
     }
     $adv->save($bd, $adv);
-    
-    
+    $id = $bd->select('SELECT `id` FROM `form` ORDER BY `id` DESC LIMIT 1');
+//    var_dump($id);
+    $smarty->assign('id_tr', $id);
     $smarty->assign('announcements_tr', $adv);
     $output1 = $smarty->fetch("tr.tpl");
     echo $output1;

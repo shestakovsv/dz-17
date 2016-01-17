@@ -5,7 +5,7 @@
     {else}
     <tr>   
     {/if} 
-    <td>{$announcements_tr->id}</td>
+    <td>{$id_tr[0].id}</td>
     <td><a href="{$Location}?id={$announcements_tr->id}">{$announcements_tr->title}</a></td>
     <td>{$announcements_tr->description}</td>
     <td>{$announcements_tr->price}    руб.</td>

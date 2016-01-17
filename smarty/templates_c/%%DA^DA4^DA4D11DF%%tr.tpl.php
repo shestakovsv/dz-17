@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.28, created on 2016-01-12 12:17:30
+<?php /* Smarty version 2.6.28, created on 2016-01-17 14:11:10
          compiled from tr.tpl */ ?>
 
 
@@ -7,7 +7,7 @@
     <?php else: ?>
     <tr>   
     <?php endif; ?> 
-    <td><?php echo $this->_tpl_vars['announcements_tr']->id; ?>
+    <td><?php echo $this->_tpl_vars['id_tr'][0]['id']; ?>
 </td>
     <td><a href="<?php echo $this->_tpl_vars['Location']; ?>
 ?id=<?php echo $this->_tpl_vars['announcements_tr']->id; ?>

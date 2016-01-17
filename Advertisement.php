@@ -66,5 +66,6 @@ abstract class Advertisement {
             $this->sql_INSERT($bd, $adv);
         }
     }
+   
 
 }
