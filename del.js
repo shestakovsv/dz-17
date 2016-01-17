@@ -8,7 +8,10 @@ $(document).ready(function () {
 //            alert('success');
             tr.fadeOut('slow', function () {
                 tr.remove();
-//                alert('success');
+                if (!$('td.id').length) {
+                    alert("Активных объявлений нет!");
+                }
+                ;
             });
         });
     });
@@ -30,9 +33,3 @@ $(document).ready(function () {
         $('form.form-horizontal').trigger('reset');
     });
 });
-
-if (!$('tr').length) {
-    alert("Активных объявлений нет!");
-}
-;
-
