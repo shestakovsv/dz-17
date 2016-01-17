@@ -28,6 +28,7 @@ if (!$_POST == NULL) {
     $output1 = $smarty->fetch("tr.tpl");
     echo $output1;
 //    $smarty->display('tr.tpl');
+    exit;
 }
 
 

@@ -30,7 +30,7 @@
 <body style="width:700px;padding:30px;margin:auto;">
     <form class="form-horizontal" method="POST" role="form" margin="auto">
         {if (!empty($announcements_show))}    
-            <input type="hidden" value={$announcements_show->id} name="id">
+            <input type="hidden" class="idt" value={$announcements_show->id} name="id">
         {/if} 
         <br>
         <div class="form-group">

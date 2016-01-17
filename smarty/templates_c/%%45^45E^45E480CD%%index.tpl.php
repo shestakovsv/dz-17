@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.28, created on 2015-12-29 14:25:59
+<?php /* Smarty version 2.6.28, created on 2016-01-17 02:42:39
          compiled from index.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('modifier', 'default', 'index.tpl', 40, false),array('modifier', 'replace', 'index.tpl', 40, false),array('function', 'html_options', 'index.tpl', 84, false),)), $this); ?>
@@ -35,7 +35,7 @@ unset($_smarty_tpl_vars);
 <body style="width:700px;padding:30px;margin:auto;">
     <form class="form-horizontal" method="POST" role="form" margin="auto">
         <?php if (( ! empty ( $this->_tpl_vars['announcements_show'] ) )): ?>    
-            <input type="hidden" value=<?php echo $this->_tpl_vars['announcements_show']->id; ?>
+            <input type="hidden" class="idt" value=<?php echo $this->_tpl_vars['announcements_show']->id; ?>
  name="id">
         <?php endif; ?> 
         <br>
