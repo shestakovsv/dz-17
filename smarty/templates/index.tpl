@@ -6,7 +6,7 @@
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 
-<br>
+
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -20,7 +20,7 @@
 
 <script src="del.js"></script>
 
-<div id="container"></div>
+{*<div id="container"></div>*}
 
 
 {* Добавляем немного прогноза погоды с сервера погоды *}
@@ -28,6 +28,7 @@
 
 
 <body style="width:700px;padding:30px;margin:auto;">
+    
     <form class="form-horizontal" method="POST" role="form" margin="auto">
         {if (!empty($announcements_show))}    
             <input type="hidden" class="idt" value={$announcements_show->id} name="id">

@@ -1,7 +1,7 @@
-<?php /* Smarty version 2.6.28, created on 2016-01-17 02:42:39
+<?php /* Smarty version 2.6.28, created on 2016-01-21 08:41:54
          compiled from index.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
-smarty_core_load_plugins(array('plugins' => array(array('modifier', 'default', 'index.tpl', 40, false),array('modifier', 'replace', 'index.tpl', 40, false),array('function', 'html_options', 'index.tpl', 84, false),)), $this); ?>
+smarty_core_load_plugins(array('plugins' => array(array('modifier', 'default', 'index.tpl', 41, false),array('modifier', 'replace', 'index.tpl', 41, false),array('function', 'html_options', 'index.tpl', 85, false),)), $this); ?>
 
 
 
@@ -13,7 +13,7 @@ unset($_smarty_tpl_vars);
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 
-<br>
+
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -27,12 +27,12 @@ unset($_smarty_tpl_vars);
 
 <script src="del.js"></script>
 
-<div id="container"></div>
 
 
 
 
 <body style="width:700px;padding:30px;margin:auto;">
+    
     <form class="form-horizontal" method="POST" role="form" margin="auto">
         <?php if (( ! empty ( $this->_tpl_vars['announcements_show'] ) )): ?>    
             <input type="hidden" class="idt" value=<?php echo $this->_tpl_vars['announcements_show']->id; ?>

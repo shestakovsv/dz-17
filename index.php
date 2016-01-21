@@ -54,13 +54,6 @@ $announcementsObgect = $repository->repositoryGet(); //извлечение ма
 
 
 
-if (isset($_GET['id'])) { // передача переменных в шаблон
-    $id = $_GET['id'];
-    if (isset($announcementsObgect[$id])) {
-        $smarty->assign('announcements_show', $announcementsObgect[$id]);
-        $smarty->assign('save', 'Сохранить изменения');
-    }
-}
 
 
 //подключение таблиц городов и категорий
@@ -71,9 +64,20 @@ $category = translation_table_category_in_array_category($bd);
 $smarty->assign('Location', basename($_SERVER['PHP_SELF']));
 $smarty->assign('location', $location);
 $smarty->assign('category', $category);
+//$smarty->assign('announcements', $announcementsObgect);
+
+if (isset($_GET['id'])) { // передача переменных в шаблон
+    $id = $_GET['id'];
+    if (isset($announcementsObgect[$id])) {
+        $smarty->assign('announcements_show', $announcementsObgect[$id]);
+        $smarty->assign('save', 'Сохранить изменения');
+    }
+    $output2 = $smarty->fetch("index.tpl");
+    echo $output2;
+    exit;
+}
+
 $smarty->assign('announcements', $announcementsObgect);
-
-
 
 if (!empty($announcementsObgect)) {
     $smarty->display('table.tpl');

@@ -37,6 +37,7 @@ include 'RepositoryAds.php';
 include 'Advertisement.php';
 include 'AdvCompany.php';
 include 'AdvPrivate.php';
+//include 'AdvPrivate.php';
 //include 'AdvertisementFactory.php';
 // загрузка данных из фала server_name,user_name, password, database
 $filename = './User.txt';
