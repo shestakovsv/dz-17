@@ -14,6 +14,7 @@ if (!$_POST == NULL) {
 
     if (empty($postDate["allow_mails"])) {
         $postDate["allow_mails"] = 0;
+//         exit;
     }
 //        unset($postDate["main_form_submit"]);
     if ($postDate['private'] == 0) {
@@ -72,8 +73,9 @@ if (isset($_GET['id'])) { // передача переменных в шабло
         $smarty->assign('announcements_show', $announcementsObgect[$id]);
         $smarty->assign('save', 'Сохранить изменения');
     }
-    $output2 = $smarty->fetch("index.tpl");
-    echo $output2;
+//    $output2 = $smarty->fetch("index.tpl");
+//    echo $output2;
+    echo json_encode($announcementsObgect[$id]);
     exit;
 }
 

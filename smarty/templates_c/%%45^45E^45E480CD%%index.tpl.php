@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.28, created on 2016-01-21 08:41:54
+<?php /* Smarty version 2.6.28, created on 2016-01-27 15:33:42
          compiled from index.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('modifier', 'default', 'index.tpl', 41, false),array('modifier', 'replace', 'index.tpl', 41, false),array('function', 'html_options', 'index.tpl', 85, false),)), $this); ?>
@@ -44,9 +44,9 @@ unset($_smarty_tpl_vars);
             </div>
             <div class="col-sm-8">
                 <label><input type = "radio" <?php echo ((is_array($_tmp=((is_array($_tmp=((is_array($_tmp=@$this->_tpl_vars['announcements_show']->private)) ? $this->_run_mod_handler('default', true, $_tmp, 'checked = ""') : smarty_modifier_default($_tmp, 'checked = ""')))) ? $this->_run_mod_handler('replace', true, $_tmp, 1, 'checked = ""') : smarty_modifier_replace($_tmp, 1, 'checked = ""')))) ? $this->_run_mod_handler('replace', true, $_tmp, 0, '') : smarty_modifier_replace($_tmp, 0, '')); ?>
- value = "1" name = "private">Частное лицо</label>
+ value = "1" name = "private" id="private_person">Частное лицо</label>
                 <label><input type = "radio" <?php echo ((is_array($_tmp=((is_array($_tmp=((is_array($_tmp=@$this->_tpl_vars['announcements_show']->private)) ? $this->_run_mod_handler('default', true, $_tmp, '') : smarty_modifier_default($_tmp, '')))) ? $this->_run_mod_handler('replace', true, $_tmp, 0, 'checked = ""') : smarty_modifier_replace($_tmp, 0, 'checked = ""')))) ? $this->_run_mod_handler('replace', true, $_tmp, 1, '') : smarty_modifier_replace($_tmp, 1, '')); ?>
-  value = "0" name = "private">Компания</label>
+  value = "0" name = "private" id="ltd">Компания</label>
             </div>
         </div>               
         <div class="form-group">
@@ -103,7 +103,7 @@ unset($_smarty_tpl_vars);
             <label class="col-sm-4">Категория</label>
             <div class="col-md-8">
                 <select class="form-control" title="Выберите категорию объявления"  name="category_id"> 
-                    <option >-- Выберите категорию объявления --</option>
+                    <option id="category_id">-- Выберите категорию объявления --</option>
                     <?php echo smarty_function_html_options(array('options' => $this->_tpl_vars['category'],'selected' => $this->_tpl_vars['announcements_show']->category_id), $this);?>
 
                 </select>

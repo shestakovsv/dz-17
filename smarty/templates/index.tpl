@@ -38,8 +38,8 @@
             <div class="col-sm-4">
             </div>
             <div class="col-sm-8">
-                <label><input type = "radio" {$announcements_show->private|default:'checked = ""'|replace:1:'checked = ""'|replace:0:''} value = "1" name = "private">Частное лицо</label>
-                <label><input type = "radio" {$announcements_show->private|default:''|replace:0:'checked = ""'|replace:1:''}  value = "0" name = "private">Компания</label>
+                <label><input type = "radio" {$announcements_show->private|default:'checked = ""'|replace:1:'checked = ""'|replace:0:''} value = "1" name = "private" id="private_person">Частное лицо</label>
+                <label><input type = "radio" {$announcements_show->private|default:''|replace:0:'checked = ""'|replace:1:''}  value = "0" name = "private" id="ltd">Компания</label>
             </div>
         </div>               
         <div class="form-group">
@@ -82,7 +82,7 @@
             <div class="col-md-8">
                 <select class="form-control"   title="Выберите Ваш город"  name="location_id">
                     <option >-- Выберите Ваш город --</option>
-                    {html_options options=$location selected=$announcements_show->location_id}
+                    {html_options  options=$location selected=$announcements_show->location_id}
                 </select>
             </div>            
         </div>
@@ -90,8 +90,9 @@
             <label class="col-sm-4">Категория</label>
             <div class="col-md-8">
                 <select class="form-control" title="Выберите категорию объявления"  name="category_id"> 
-                    <option >-- Выберите категорию объявления --</option>
-                    {html_options options=$category selected=$announcements_show->category_id}
+                    <option id="category_id">-- Выберите категорию объявления --</option>
+{*                    {html_options  options=$category selected=$announcements_show->category_id}*}
+                    {html_options  options=$category selected=$announcements_show->category_id}
                 </select>
             </div>            
         </div>
