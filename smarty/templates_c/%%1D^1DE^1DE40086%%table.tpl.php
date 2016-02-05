@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.28, created on 2016-01-15 11:01:59
+<?php /* Smarty version 2.6.28, created on 2016-02-04 14:14:02
          compiled from table.tpl */ ?>
 
 <h2 class="sub-header">Все объявления</h2>

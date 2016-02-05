@@ -1,7 +1,7 @@
-<?php /* Smarty version 2.6.28, created on 2016-01-27 15:33:42
+<?php /* Smarty version 2.6.28, created on 2016-02-04 13:38:15
          compiled from index.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
-smarty_core_load_plugins(array('plugins' => array(array('modifier', 'default', 'index.tpl', 41, false),array('modifier', 'replace', 'index.tpl', 41, false),array('function', 'html_options', 'index.tpl', 85, false),)), $this); ?>
+smarty_core_load_plugins(array('plugins' => array(array('modifier', 'default', 'index.tpl', 43, false),array('modifier', 'replace', 'index.tpl', 43, false),array('function', 'html_options', 'index.tpl', 87, false),)), $this); ?>
 
 
 
@@ -12,6 +12,7 @@ unset($_smarty_tpl_vars);
  ?>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="jquery.form.js"></script>
 
 
 
@@ -25,15 +26,16 @@ unset($_smarty_tpl_vars);
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 
-<script src="del.js"></script>
+<script src="del.js?<?php echo time(); ?>"></script>
 
+<div id="container"></div>
 
 
 
 
 <body style="width:700px;padding:30px;margin:auto;">
     
-    <form class="form-horizontal" method="POST" role="form" margin="auto">
+    <form id="ajax-form" class="form-horizontal" method="POST" role="form" margin="auto">
         <?php if (( ! empty ( $this->_tpl_vars['announcements_show'] ) )): ?>    
             <input type="hidden" class="idt" value=<?php echo $this->_tpl_vars['announcements_show']->id; ?>
  name="id">

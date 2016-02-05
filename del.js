@@ -1,36 +1,64 @@
 
 $(document).ready(function () {
 
-    $('input.btn').on('click', function () {
-        var idt = $('input.idt:hidden').attr('value'), params = $('form.form-horizontal').serialize();
-        console.log(idt);
-        $.post('index.php', params, function (data) {
-            if (idt === undefined) {
-                $('tbody').append(data);
-            } else {
-                var tr = $('[href*=' + idt + ']').closest('tr');
-                tr.replaceWith(data);
-            }
-        });
-        $('form.form-horizontal').trigger('reset');
-        return false;
+
+
+    function showResponse(response) {
+
+        console.log(response);
+    }
+    ;
+    var options = {
+        target: '#container', // target element(s) to be updated with server response 
+//        beforeSubmit: showRequest, // pre-submit callback 
+        success: 'showResponse', // post-submit callback 
+
+        // other available options: 
+        url: 'index.php', // override for form's 'action' attribute 
+//        type: 'post', // 'get' or 'post', override for form's 'method' attribute 
+        dataType: 'json', // 'xml', 'script', or 'json' (expected server response type) 
+        clearForm: true, // clear all form fields after successful submit 
+        resetForm: true        // reset the form after successful submit 
+
+                // $.ajax options can be used here too, for example: 
+                //timeout:   3000 
+    };
+    // bind form using 'ajaxForm' 
+    $('#ajax-form').ajaxForm(options);
+
+
+
+    //отправка данных с формы на сервер и спрос формы
+//    $('input.btn').on('click', function () {
+//        var idt = $('input.idt:hidden').attr('value'), params = $('form.form-horizontal').serialize();
+//        console.log(idt);
+//        $.post('index.php', params, function (data) {
+//            if (idt === undefined) {
+//                $('tbody').append(data);
+//            } else {
+//                var tr = $('[href*=' + idt + ']').closest('tr');
+//                tr.replaceWith(data);
+//            }
 //        });
-    });
-//    $('button.btn').on('click', function () {
+//        $('form.form-horizontal').trigger('reset');//сброс формы
+//        return false;
+//    });
+
+    //удаление объявления и проверка на наличие объявлений
     $('#myTable').on('click', 'button.btn', function () {
         var tr = $(this).closest('tr');
         var id = tr.children('td:first').html();
         $.getJSON('index.php?id_del=' + id, function () {
             tr.fadeOut('slow', function () {
                 tr.remove();
-                if (!$('td.id').length) {
+                if (!$('td.id').length) { //проверка на наличие объявлений
                     alert("Активных объявлений нет!");
                 }
                 ;
             });
         });
     });
-//    
+    //подстановка данных в форму     
     $('#myTable').on('click', 'a', function () {
         var tr = $(this).closest('tr');
         var id = tr.children('td:first').html();
@@ -62,9 +90,6 @@ $(document).ready(function () {
         return false;
     });
 });
-
-
-
 //$('#myTable').on('click', 'a', function () {
 //    var tr = $(this).closest('tr');
 //    var id = tr.children('td:first').html();

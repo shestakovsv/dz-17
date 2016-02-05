@@ -5,6 +5,8 @@
 {include file='header.tpl'}
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+{*<script src="jquery.form.min.js"></script>*}
+<script src="jquery.form.js"></script>
 
 
 
@@ -18,9 +20,9 @@
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 
-<script src="del.js"></script>
+<script src="del.js?{php}echo time();{/php}"></script>
 
-{*<div id="container"></div>*}
+<div id="container"></div>
 
 
 {* Добавляем немного прогноза погоды с сервера погоды *}
@@ -29,7 +31,7 @@
 
 <body style="width:700px;padding:30px;margin:auto;">
     
-    <form class="form-horizontal" method="POST" role="form" margin="auto">
+    <form id="ajax-form" class="form-horizontal" method="POST" role="form" margin="auto">
         {if (!empty($announcements_show))}    
             <input type="hidden" class="idt" value={$announcements_show->id} name="id">
         {/if} 
