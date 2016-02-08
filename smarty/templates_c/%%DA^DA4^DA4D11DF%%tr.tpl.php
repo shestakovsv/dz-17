@@ -1,13 +1,14 @@
-<?php /* Smarty version 2.6.28, created on 2016-01-17 14:11:10
+<?php /* Smarty version 2.6.28, created on 2016-02-08 17:42:00
          compiled from tr.tpl */ ?>
 
 
 <?php if (( $this->_tpl_vars['announcements_tr']->private == 0 )): ?>    
     <tr class="success">
     <?php else: ?>
-    <tr>   
+    <tr class="">   
     <?php endif; ?> 
-    <td><?php echo $this->_tpl_vars['id_tr'][0]['id']; ?>
+    <td class="<?php echo $this->_tpl_vars['id_tr']; ?>
+"><?php echo $this->_tpl_vars['id_tr']; ?>
 </td>
     <td><a href="<?php echo $this->_tpl_vars['Location']; ?>
 ?id=<?php echo $this->_tpl_vars['announcements_tr']->id; ?>

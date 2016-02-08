@@ -5,8 +5,8 @@
 {include file='header.tpl'}
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-{*<script src="jquery.form.min.js"></script>*}
-<script src="jquery.form.js"></script>
+<script src="jquery.form.min.js"></script>
+{*<script src="jquery.form.js"></script>*}
 
 
 
@@ -31,7 +31,7 @@
 
 <body style="width:700px;padding:30px;margin:auto;">
     
-    <form id="ajax-form" class="form-horizontal" method="POST" role="form" margin="auto">
+    <form id="myForm" class="form-horizontal" method="POST" role="form" margin="auto">
         {if (!empty($announcements_show))}    
             <input type="hidden" class="idt" value={$announcements_show->id} name="id">
         {/if} 
@@ -118,7 +118,7 @@
             </div>
         </div>
 {*        <input type="submit" class="btn btn-default"  value="{$save|default:'Сохранить'}"  name="main_form_submit" class="vas-submit-input">*}
-        <input type="button" class="btn btn-default"  value="{$save|default:'Сохранить'}"  name="main_form_submit" class="vas-submit-input">
+        <input type="submit" class="btn btn-default"  value="{$save|default:'Сохранить'}"  name="main_form_submit" class="vas-submit-input">
 {*        <td><button type="button" class="btn btn-default">Удалить</button></td>*}
         <br>
     </form>

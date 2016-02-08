@@ -3,33 +3,51 @@
 
 include 'config.php';
 
-//if (!$_POST == NULL) {
-//    print_r($_POST);
-//    var_dump($_POST);
-//    exit;
-//}
+
 //добавленых объявления в массив
 if (!$_POST == NULL) {
     $postDate = ($_POST);
+    if (isset($postDate["id"])) {
+        if ($postDate["id"] == "") {
+            unset($postDate["id"]);
+//            var_dump($postDate);
+//            exit;
+        }
+    }
+
 
     if (empty($postDate["allow_mails"])) {
         $postDate["allow_mails"] = 0;
-//         exit;
     }
-//        unset($postDate["main_form_submit"]);
+//    
+
     if ($postDate['private'] == 0) {
         $adv = new AdvertisementCompany($postDate);
     } else {
         $adv = new AdvertisementPrivate($postDate);
     }
     $adv->save($bd, $adv);
-    $id = $bd->select('SELECT `id` FROM `form` ORDER BY `id` DESC LIMIT 1');
-//    var_dump($id);
-    $smarty->assign('id_tr', $id);
+    if (!isset($postDate["id"])) {
+        $id = $bd->select('SELECT `id` FROM `form` ORDER BY `id` DESC LIMIT 1');
+//        var_dump($id[0][id]);
+//        exit;
+        $smarty->assign('id_tr', $id[0]["id"]);
+    } else {
+        $id = $adv->id;
+//        var_dump($id);
+//        exit;
+        $smarty->assign('id_tr', $id);
+//        echo $adv->id;
+//        exit;
+    }
+
     $smarty->assign('announcements_tr', $adv);
     $output1 = $smarty->fetch("tr.tpl");
     echo $output1;
+//    echo json_encode(['msg' => 'ok']);
 //    $smarty->display('tr.tpl');
+//    unset($postDate["id"]);
+//    unset($postDate["main_form_submit"]);
     exit;
 }
 
@@ -52,11 +70,6 @@ $announcementsObgect = $repository->repositoryGet(); //извлечение ма
 //echo $announcementsObgect;
 //var_dump($repository);
 //if ($announcementsObgect)
-
-
-
-
-
 //подключение таблиц городов и категорий
 
 $location = translation_table_sity_in_array_location($bd);

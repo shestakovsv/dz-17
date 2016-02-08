@@ -27,7 +27,7 @@
                     <tr>      
                     {/if} 
 {*                    <td><a href="{$Location}?id={$value->id}">{$value->id}</a></td>*}
-                    <td class="id">{$value->id} </td>
+                    <td class="id {$value->id}">{$value->id} </td>
                     <td><a href="{$Location}?id={$value->id}">{$value->title}</a></td>
                     <td>{$value->description}</td>
                     <td>{$value->price}    руб.</td>

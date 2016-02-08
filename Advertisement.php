@@ -18,7 +18,7 @@ abstract class Advertisement {
 
     function __construct($postDate) {
         if (isset($postDate["id"])) { // проверка наличия id в форме
-            $this->id = $postDate["id"];
+                $this->id = $postDate["id"];
         }
         $this->manager = $postDate["manager"];
         $this->email = $postDate["email"];
@@ -66,6 +66,5 @@ abstract class Advertisement {
             $this->sql_INSERT($bd, $adv);
         }
     }
-   
 
 }

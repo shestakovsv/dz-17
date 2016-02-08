@@ -1,45 +1,58 @@
 
+
+
 $(document).ready(function () {
 
-
-
     function showResponse(response) {
+//        console.log(response);
+        var idt = $('input.idt:hidden').attr('value'); //, params = $('form.form-horizontal').serialize();
+//        console.log(idt);
+        if (idt === undefined) {
+            $('tbody').append(response);
+        } else if (idt === '') {
+            $('tbody').append(response);
+        } else {
+            var tr = $('td.' + idt + '').closest('tr');
 
-        console.log(response);
+            tr.replaceWith(response);
+//            $('input.idt:hidden').attr('value','');
+            $('input.idt:hidden').remove();
+        }
+        $('form.form-horizontal').trigger('reset'); //сброс формы
+
+        return false;
     }
     ;
     var options = {
-        target: '#container', // target element(s) to be updated with server response 
+//        target: '#output1', // target element(s) to be updated with server response 
 //        beforeSubmit: showRequest, // pre-submit callback 
-        success: 'showResponse', // post-submit callback 
+        success: showResponse, // post-submit callback 
 
         // other available options: 
         url: 'index.php', // override for form's 'action' attribute 
-//        type: 'post', // 'get' or 'post', override for form's 'method' attribute 
-        dataType: 'json', // 'xml', 'script', or 'json' (expected server response type) 
-        clearForm: true, // clear all form fields after successful submit 
-        resetForm: true        // reset the form after successful submit 
+        //type:      type        // 'get' or 'post', override for form's 'method' attribute 
+//        dataType: 'json', // 'xml', 'script', or 'json' (expected server response type) 
+//        clearForm: true, // clear all form fields after successful submit 
+//        resetForm: true      // reset the form after successful submit 
 
-                // $.ajax options can be used here too, for example: 
-                //timeout:   3000 
+        // $.ajax options can be used here too, for example: 
+        //timeout:   3000 
     };
     // bind form using 'ajaxForm' 
-    $('#ajax-form').ajaxForm(options);
-
-
-
-    //отправка данных с формы на сервер и спрос формы
+    $('#myForm').ajaxForm(options);
+    //отправка данных с формы на сервер и сброс формы
 //    $('input.btn').on('click', function () {
-//        var idt = $('input.idt:hidden').attr('value'), params = $('form.form-horizontal').serialize();
+//        var idt = $('input.idt:hidden').attr('value');//, params = $('form.form-horizontal').serialize();
 //        console.log(idt);
-//        $.post('index.php', params, function (data) {
+////        $.post('index.php', params, function (data) {
+//            $('#myForm').ajaxForm(options);
 //            if (idt === undefined) {
 //                $('tbody').append(data);
 //            } else {
 //                var tr = $('[href*=' + idt + ']').closest('tr');
 //                tr.replaceWith(data);
 //            }
-//        });
+////        });
 //        $('form.form-horizontal').trigger('reset');//сброс формы
 //        return false;
 //    });
@@ -90,6 +103,16 @@ $(document).ready(function () {
         return false;
     });
 });
+//
+//function showResponse(responseText, statusText, xhr, $form) {
+//    alert('status: ' + statusText + '\n\nresponseText: \n' + responseText + 
+//        '\n\nThe output div should have already been updated with the responseText.'); 
+//}
+//;
+
+
+
+
 //$('#myTable').on('click', 'a', function () {
 //    var tr = $(this).closest('tr');
 //    var id = tr.children('td:first').html();

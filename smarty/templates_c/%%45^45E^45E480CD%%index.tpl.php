@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.28, created on 2016-02-04 13:38:15
+<?php /* Smarty version 2.6.28, created on 2016-02-05 10:14:54
          compiled from index.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('modifier', 'default', 'index.tpl', 43, false),array('modifier', 'replace', 'index.tpl', 43, false),array('function', 'html_options', 'index.tpl', 87, false),)), $this); ?>
@@ -12,7 +12,7 @@ unset($_smarty_tpl_vars);
  ?>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-<script src="jquery.form.js"></script>
+<script src="jquery.form.min.js"></script>
 
 
 
@@ -35,7 +35,7 @@ unset($_smarty_tpl_vars);
 
 <body style="width:700px;padding:30px;margin:auto;">
     
-    <form id="ajax-form" class="form-horizontal" method="POST" role="form" margin="auto">
+    <form id="myForm" class="form-horizontal" method="POST" role="form" margin="auto">
         <?php if (( ! empty ( $this->_tpl_vars['announcements_show'] ) )): ?>    
             <input type="hidden" class="idt" value=<?php echo $this->_tpl_vars['announcements_show']->id; ?>
  name="id">
@@ -133,7 +133,7 @@ unset($_smarty_tpl_vars);
                 <br><br>
             </div>
         </div>
-        <input type="button" class="btn btn-default"  value="<?php echo ((is_array($_tmp=@$this->_tpl_vars['save'])) ? $this->_run_mod_handler('default', true, $_tmp, 'Сохранить') : smarty_modifier_default($_tmp, 'Сохранить')); ?>
+        <input type="submit" class="btn btn-default"  value="<?php echo ((is_array($_tmp=@$this->_tpl_vars['save'])) ? $this->_run_mod_handler('default', true, $_tmp, 'Сохранить') : smarty_modifier_default($_tmp, 'Сохранить')); ?>
 "  name="main_form_submit" class="vas-submit-input">
         <br>
     </form>

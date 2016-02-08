@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.28, created on 2016-02-04 14:14:02
+<?php /* Smarty version 2.6.28, created on 2016-02-08 17:39:23
          compiled from table.tpl */ ?>
 
 <h2 class="sub-header">Все объявления</h2>
@@ -26,7 +26,8 @@
                     <?php else: ?>
                     <tr>      
                     <?php endif; ?> 
-                    <td class="id"><?php echo $this->_tpl_vars['value']->id; ?>
+                    <td class="id <?php echo $this->_tpl_vars['value']->id; ?>
+"><?php echo $this->_tpl_vars['value']->id; ?>
  </td>
                     <td><a href="<?php echo $this->_tpl_vars['Location']; ?>
 ?id=<?php echo $this->_tpl_vars['value']->id; ?>
