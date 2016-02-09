@@ -1,7 +1,7 @@
 
 <h2 class="sub-header">Все объявления</h2>
 {*<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>*}
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 {*<script src="jquery.form.min.js"></script>*}
 {*https://yastatic.net/jquery/2.1.4/jquery.min.js*}
 {*<Сценарий  SRC = "https://yastatic.net/jquery/2.1.4/jquery.min.js"></ Скрипт>*}
